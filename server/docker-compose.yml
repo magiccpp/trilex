@@ -1,0 +1,66 @@
+# Þríauga sync service.
+#
+# Deliberate choices:
+#   * api binds to 127.0.0.1 only - the existing nginx reverse-proxies to it,
+#     so the container is never directly reachable from the internet.
+#   * mail publishes NO ports at all. It is reachable only over the private
+#     `internal` network, so this host runs no public SMTP listener.
+services:
+  api:
+    build: ./api
+    container_name: thriauga-sync
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8088:8000"      # loopback only; nginx fronts this
+    volumes:
+      # A named volume, not a bind mount: it inherits /data's ownership from
+      # the image (uid 10001), whereas a host bind mount would mask it and the
+      # unprivileged process could not open the database.
+      - thriauga-data:/data
+      # Media packs are read-only static files uploaded by the build machine.
+      - ./packs:/packs:ro
+    environment:
+      DB_PATH: /data/thriauga.db
+      PACK_DIR: /packs
+      ROOT_PATH: ${ROOT_PATH:-/thriauga}
+      SECRET_KEY: ${SECRET_KEY:-}
+      MAIL_BACKEND: ${MAIL_BACKEND:-log}
+      SMTP_HOST: mail
+      SMTP_PORT: "25"
+      MAIL_FROM: ${MAIL_FROM:-thriauga@xiaodong.io}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME:-Thriauga}
+      CODE_TTL_SEC: ${CODE_TTL_SEC:-600}
+      RATE_EMAIL_PER_HOUR: ${RATE_EMAIL_PER_HOUR:-5}
+      RATE_IP_PER_HOUR: ${RATE_IP_PER_HOUR:-20}
+    networks: [internal]
+    depends_on: [mail]
+
+  mail:
+    build: ./mail
+    container_name: thriauga-mail
+    restart: unless-stopped
+    # No `ports:` mapping on purpose - internal network access only.
+    volumes:
+      - thriauga-dkim:/dkim
+      # Postfix's spool needs precise ownership and split permissions; a named
+      # volume preserves what the image set up, a bind mount would not.
+      - thriauga-spool:/var/spool/postfix
+    environment:
+      MAIL_DOMAIN: ${MAIL_DOMAIN:-xiaodong.io}
+      MAIL_HOSTNAME: ${MAIL_HOSTNAME:-mail.xiaodong.io}
+      DKIM_SELECTOR: ${DKIM_SELECTOR:-thriauga}
+      PUBLIC_IP: ${PUBLIC_IP:-138.128.194.204}
+      ALLOWED_NET: ${ALLOWED_NET:-172.16.0.0/12}
+      RELAY_HOST: ${RELAY_HOST:-}
+      RELAY_USER: ${RELAY_USER:-}
+      RELAY_PASS: ${RELAY_PASS:-}
+    networks: [internal]
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  thriauga-data:
+  thriauga-dkim:
+  thriauga-spool:

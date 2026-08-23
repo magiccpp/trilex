@@ -1,0 +1,13 @@
+# Generated data — published as GitHub release assets, never committed.
+# The dictionary alone is 707 MB; GitHub rejects files over 100 MB in a repo.
+data/
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+
+# Local secrets
+server/.env
+server/data/
+server/packs/
+server/dkim/

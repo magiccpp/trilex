@@ -1,0 +1,45 @@
+Þríauga — third-party data and attribution
+==========================================
+
+The application source in this repository is covered by LICENSE.
+
+The generated dictionary and media packs, published as release assets, are
+derived from the sources below. They are redistributed under CC BY-SA 4.0 to
+satisfy the share-alike terms of the sources that require it.
+
+--------------------------------------------------------------------------
+CC-CEDICT — Chinese–English dictionary
+  124,880 entries
+  https://www.mdbg.net/chinese/dictionary?page=cc-cedict
+  Licence: CC BY-SA 4.0
+
+Folkets lexikon — Swedish–English dictionary
+  95,443 entries, plus 30,807 example sentences and idioms
+  Kungliga Tekniska högskolan (KTH) / Språkbanken
+  https://folkets-lexikon.csc.kth.se/
+  Licence: CC BY-SA 2.5 Generic
+
+Wiktionary — etymologies, inflected forms, sense examples, pronunciation
+  1,629,915 entries · 550,378 etymologies · 1,144,654 inflected forms
+  Extracted with wiktextract, via https://kaikki.org
+  https://en.wiktionary.org
+  Licence: CC BY-SA 4.0 and GFDL
+
+Tatoeba — example sentences
+  118,692 aligned sentence pairs (English–Swedish, English–Chinese)
+  https://tatoeba.org
+  Licence: CC BY 2.0 FR
+
+Wikimedia Commons — illustrations and pronunciation audio
+  5,715 images · 30,738 audio recordings
+  https://commons.wikimedia.org
+  Licences: per file (CC0, Public Domain, CC BY, CC BY-SA, GFDL)
+  Each image and audio clip stores its own licence and author, and the
+  application displays them alongside the media.
+--------------------------------------------------------------------------
+
+Only freely-licensed media is included. Files hosted locally on Wikipedia
+rather than Commons — typically non-free — are excluded by the build.
+
+Chinese–Swedish word pairs are derived through English, because no free
+direct Chinese–Swedish lexicon exists. The application labels such results.
