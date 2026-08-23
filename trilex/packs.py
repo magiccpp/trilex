@@ -16,7 +16,12 @@ from pathlib import Path
 
 from . import db
 
-DEFAULT_URL = "https://xiaodong.io/thriauga"
+# Media is published as GitHub release assets: free, unmetered, and it keeps
+# 400 MB of static downloads off the sync server. The /latest/ path always
+# resolves to the newest release, so the client needs no version pinning.
+DEFAULT_URL = "https://github.com/magiccpp/trilex/releases/latest/download"
+# Fallback for a self-hosted deployment serving the pack API instead.
+API_URL = "https://xiaodong.io/thriauga"
 UA = {"User-Agent": "Thriauga/1.0"}
 
 
@@ -34,6 +39,7 @@ class Pack:
     bytes: int
     sha256: str
     built: str = ""
+    url: str = ""          # absolute; set when published to a static host
 
     @property
     def size_mb(self) -> float:
@@ -46,8 +52,33 @@ class PackClient:
         self.dir = Path(data_dir) if data_dir else db.data_dir()
 
     # ------------------------------------------------------------- discovery
+    def _manifest_url(self) -> str:
+        """Static hosts serve manifest.json directly; the API serves /v1/packs."""
+        if "/releases/" in self.base_url or self.base_url.endswith("/download"):
+            return f"{self.base_url}/manifest.json"
+        return f"{self.base_url}/v1/packs"
+
+    def _asset_url(self, entry: dict, kind: str) -> str:
+        """Absolute URL from the manifest, else the API route."""
+        if entry.get("url"):
+            return entry["url"]
+        if "/releases/" in self.base_url or self.base_url.endswith("/download"):
+            return f"{self.base_url}/{entry['file']}"
+        return (f"{self.base_url}/v1/dictionary" if kind == "dictionary"
+                else f"{self.base_url}/v1/packs/{entry['name']}")
+
+    def _manifest(self) -> dict:
+        req = urllib.request.Request(self._manifest_url(), headers=dict(UA))
+        try:
+            with urllib.request.urlopen(req, timeout=25) as r:
+                return json.loads(r.read())
+        except urllib.error.URLError as e:
+            raise PackError(f"Cannot reach {self.base_url} ({e.reason})")
+        except Exception as e:
+            raise PackError(str(e))
+
     def available(self) -> list[Pack]:
-        req = urllib.request.Request(f"{self.base_url}/v1/packs", headers=dict(UA))
+        req = urllib.request.Request(self._manifest_url(), headers=dict(UA))
         try:
             with urllib.request.urlopen(req, timeout=25) as r:
                 data = json.loads(r.read())
@@ -58,12 +89,14 @@ class PackClient:
         out = []
         for p in data.get("packs", []):
             try:
-                out.append(Pack(**{k: p[k] for k in
-                                   ("name", "title", "detail", "file", "rows",
-                                    "bytes", "sha256") if k in p},
-                                built=p.get("built", "")))
+                pack = Pack(**{k: p[k] for k in
+                               ("name", "title", "detail", "file", "rows",
+                                "bytes", "sha256") if k in p},
+                            built=p.get("built", ""))
             except TypeError:
                 continue
+            pack.url = self._asset_url(p, "pack")
+            out.append(pack)
         return out
 
     def installed_path(self, name) -> Path:
@@ -92,8 +125,8 @@ class PackClient:
             part.unlink()
             have = 0
 
-        req = urllib.request.Request(f"{self.base_url}/v1/packs/{pack.name}",
-                                     headers=dict(UA))
+        req = urllib.request.Request(pack.url or self._asset_url(
+            {"name": pack.name, "file": pack.file}, "pack"), headers=dict(UA))
         if have:
             req.add_header("Range", f"bytes={have}-")
         mode = "ab" if have else "wb"
@@ -135,12 +168,11 @@ class PackClient:
 
     # ------------------------------------------------------- core dictionary
     def dictionary_info(self):
-        req = urllib.request.Request(f"{self.base_url}/v1/packs", headers=dict(UA))
-        try:
-            with urllib.request.urlopen(req, timeout=25) as r:
-                return json.loads(r.read()).get("dictionary")
-        except Exception as e:
-            raise PackError(f"Cannot reach {self.base_url} ({e})")
+        d = self._manifest().get("dictionary")
+        if d:
+            d = dict(d)
+            d["url"] = self._asset_url(d, "dictionary")
+        return d
 
     def dictionary_installed(self) -> bool:
         p = self.dir / "dict.db"
@@ -157,8 +189,9 @@ class PackClient:
         part = self.dir / "dict.db.part"
         part.unlink(missing_ok=True)
 
-        req = urllib.request.Request(f"{self.base_url}/v1/dictionary",
-                                     headers=dict(UA))
+        req = urllib.request.Request(
+            info.get("url") or self._asset_url(info, "dictionary"),
+            headers=dict(UA))
         total = info.get("bytes", 0)
         digest = hashlib.sha256()
         dec = lzma.LZMADecompressor()
