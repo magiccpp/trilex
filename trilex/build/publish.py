@@ -32,17 +32,26 @@ ASSETS = [
 ]
 
 
+def gh_exe():
+    return shutil.which("gh") or str(Path.home() / ".local/bin/gh")
+
+
+def run(args, capture=True):
+    # gh prints UTF-8 (✓, →) regardless of the console code page; decoding
+    # with the locale default crashes on a Chinese or Japanese Windows.
+    return subprocess.run(args, capture_output=capture, text=True,
+                          encoding="utf-8", errors="replace")
+
+
 def gh(*args, check=True, capture=True):
-    exe = shutil.which("gh") or str(Path.home() / ".local/bin/gh")
-    r = subprocess.run([exe, *args], capture_output=capture, text=True)
+    r = run([gh_exe(), *args], capture)
     if check and r.returncode != 0:
         raise SystemExit(f"gh {' '.join(args)} failed:\n{r.stderr or r.stdout}")
     return (r.stdout or "").strip()
 
 
 def require_auth():
-    exe = shutil.which("gh") or str(Path.home() / ".local/bin/gh")
-    r = subprocess.run([exe, "auth", "status"], capture_output=True, text=True)
+    r = run([gh_exe(), "auth", "status"])
     if r.returncode != 0:
         raise SystemExit(
             "Not signed in to GitHub.\n\n"
@@ -87,10 +96,7 @@ def main():
         raise SystemExit(f"missing artifacts: {', '.join(missing)}")
 
     print(f"[3/4] creating release {tag}")
-    existing = subprocess.run(
-        [shutil.which("gh") or str(Path.home() / ".local/bin/gh"),
-         "release", "view", tag, "-R", REPO],
-        capture_output=True, text=True).returncode == 0
+    existing = run([gh_exe(), "release", "view", tag, "-R", REPO]).returncode == 0
     if existing:
         print(f"  {tag} already exists — refreshing assets")
     else:
