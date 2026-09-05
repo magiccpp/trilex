@@ -33,17 +33,25 @@ touches the network, and only once you sign in.
 
 **Download page: https://xiaodong.io/thriauga/**
 
-Installers are ~50-70 KB: they carry only the source and an install script.
-Dependencies come from PyPI and the 212 MB dictionary is fetched on first run,
-so a dictionary update never requires a new installer.
+Two flavours of installer, from the
+[GitHub releases](https://github.com/magiccpp/trilex/releases/latest):
 
 | Platform | Artifact | Steps |
 |---|---|---|
-| Linux | `thriauga-1.0.0-linux.tar.gz` | `tar xzf`, then `./install.sh` |
-| Windows | `thriauga-1.0.0-windows.zip` | unzip, double-click `install.bat` |
+| Linux, everything | `thriauga-1.1.0-linux-full.tar.gz` (~415 MB) | `tar xzf`, then `./install.sh` |
+| Windows, everything | `thriauga-1.1.0-windows-full.zip` (~415 MB) | unzip, double-click `install.bat` |
+| Linux, small | `thriauga-1.1.0-linux.tar.gz` (~70 KB) | `tar xzf`, then `./install.sh` |
+| Windows, small | `thriauga-1.1.0-windows.zip` (~70 KB) | unzip, double-click `install.bat` |
 
-Both require **Python 3.10+** already present; each then builds its own
-isolated virtualenv, installs a launcher and a menu shortcut.
+The **full** archives carry the dictionary and both media packs; after
+installing, the app never needs the network. The **small** ones carry only the
+source and an install script: dependencies come from PyPI, the 212 MB
+dictionary is fetched on first run, and images and audio are optional add-ons.
+Either way a dictionary update never requires a new installer.
+
+All require **Python 3.10+** already present (`winget install
+Python.Python.3.12` on Windows); each then builds its own isolated virtualenv,
+installs a launcher and a menu shortcut.
 
 > **No native Windows `.exe` is provided.** PyInstaller must run on the
 > platform it targets, and this project is built on Linux. The Windows archive

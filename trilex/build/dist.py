@@ -1,9 +1,18 @@
 """Build the Linux and Windows installer archives.
 
-The archives are deliberately tiny (~100 KB): they carry only the application
-source and an install script. Dependencies come from PyPI and the dictionary
-is downloaded on first run, which keeps the download page honest and means a
-dictionary update does not require a new installer.
+Two flavours per platform:
+
+  thriauga-X.Y.Z-<os>       ~100 KB. Source and an install script only.
+                            Dependencies come from PyPI and the dictionary is
+                            downloaded on first run, so a dictionary update
+                            never needs a new installer.
+  thriauga-X.Y.Z-<os>-full  ~415 MB. The same, plus a data/ folder holding the
+                            compressed dictionary and both media packs. The
+                            installer unpacks them, so one download is the
+                            whole thing and the app never touches the network.
+
+The full archives are only produced when the packs exist in data/packs
+(built by trilex.build.pack, or downloaded from a previous release).
 
 A native Windows .exe cannot be produced on Linux - PyInstaller must run on
 the target platform - so the Windows archive ships a build script that makes
@@ -15,12 +24,21 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data"
 OUT = DATA / "dist"
-VERSION = "1.0.0"
+PACKS = DATA / "packs"
+VERSION = "1.1.0"
+
+# Shipped inside the "full" archives, under data/. Already compressed or
+# blob-heavy, so they are stored rather than deflated again.
+DATA_FILES = ["dict.db.xz", "media-images.db", "media-audio.db"]
 
 # Globbed, not hand-listed. A hardcoded list silently omitted theme.py when
 # it was added, which would have shipped an app that crashed on import.
 # Build-time modules stay out of the release.
 BUILD_ONLY = {"build"}
+
+CJK_FONT_PATHS = ("/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
+                  "/usr/share/fonts/truetype/noto/NotoSansCJK-Bold.ttc",
+                  "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc")
 
 
 def source_files():
@@ -56,25 +74,53 @@ if [ -z "$PY" ]; then
     echo "  Fedora:         sudo dnf install python3"
     exit 1
 fi
-echo "[1/4] Using $($PY -V)"
+echo "[1/5] Using $($PY -V)"
+# Check this before touching the disk, so a missing package leaves nothing
+# half-installed behind.
+if ! "$PY" -c 'import venv, ensurepip' >/dev/null 2>&1; then
+    echo "ERROR: Python's venv/ensurepip modules are missing."
+    echo "  Debian/Ubuntu:  sudo apt install python3-venv   (or python3.X-venv)"
+    exit 1
+fi
 
 # --- 2. Application + virtualenv ---------------------------------------
-echo "[2/4] Installing to $APP_DIR"
+echo "[2/5] Installing to $APP_DIR"
 mkdir -p "$APP_DIR"
 cp -r "$SRC/trilex" "$SRC/trilex.py" "$SRC/requirements.txt" "$APP_DIR/"
 [ -f "$SRC/README.md" ] && cp "$SRC/README.md" "$APP_DIR/"
 [ -f "$SRC/trilex.png" ] && cp "$SRC/trilex.png" "$APP_DIR/"
 
-if ! "$PY" -m venv --help >/dev/null 2>&1; then
-    echo "ERROR: the venv module is missing. Install python3-venv and retry."
-    exit 1
-fi
 "$PY" -m venv "$APP_DIR/venv"
-echo "[3/4] Installing dependencies (this downloads ~80 MB)"
+echo "[3/5] Installing dependencies (this downloads ~80 MB)"
 "$APP_DIR/venv/bin/pip" install --quiet --upgrade pip
 "$APP_DIR/venv/bin/pip" install --quiet -r "$APP_DIR/requirements.txt"
 
-# --- 3. Launcher + menu entry ------------------------------------------
+# --- 3. Bundled dictionary + media (full package only) -----------------
+DATA_DIR="${TRILEX_DATA:-${XDG_DATA_HOME:-$HOME/.local/share}/trilex}"
+BUNDLED=0
+if [ -d "$SRC/data" ]; then
+    echo "[4/5] Installing bundled dictionary and media to $DATA_DIR"
+    mkdir -p "$DATA_DIR"
+    for f in media-images.db media-audio.db; do
+        [ -f "$SRC/data/$f" ] && cp "$SRC/data/$f" "$DATA_DIR/"
+    done
+    if [ -f "$SRC/data/dict.db.xz" ]; then
+        echo "      unpacking dict.db (this takes a minute)"
+        "$APP_DIR/venv/bin/python" - "$SRC/data/dict.db.xz" "$DATA_DIR/dict.db" <<'PY'
+import lzma, os, shutil, sys
+src, dst = sys.argv[1], sys.argv[2]
+tmp = dst + ".part"
+with lzma.open(src, "rb") as i, open(tmp, "wb") as o:
+    shutil.copyfileobj(i, o, 1 << 20)
+os.replace(tmp, dst)
+PY
+    fi
+    BUNDLED=1
+else
+    echo "[4/5] No bundled data; the dictionary is downloaded on first launch"
+fi
+
+# --- 4. Launcher + menu entry ------------------------------------------
 mkdir -p "$BIN_DIR" "$DESKTOP_DIR"
 cat > "$BIN_DIR/trilex" <<LAUNCH
 #!/usr/bin/env bash
@@ -96,7 +142,7 @@ Keywords=dictionary;swedish;chinese;english;translate;
 DESK
 update-desktop-database "$DESKTOP_DIR" 2>/dev/null || true
 
-echo "[4/4] Done."
+echo "[5/5] Done."
 echo
 echo "Start it from your applications menu, or run:  trilex"
 case ":$PATH:" in
@@ -106,7 +152,11 @@ case ":$PATH:" in
      echo "      export PATH=\"\$HOME/.local/bin:\$PATH\"" ;;
 esac
 echo
-echo "On first launch it downloads the dictionary (about 212 MB)."
+if [ "$BUNDLED" = 1 ]; then
+    echo "The dictionary, images and audio are installed. Nothing more to download."
+else
+    echo "On first launch it downloads the dictionary (about 212 MB)."
+fi
 """
 
 UNINSTALL_SH = r"""#!/usr/bin/env bash
@@ -153,10 +203,10 @@ if not defined PY (
     pause
     exit /b 1
 )
-for /f "tokens=*" %%v in ('%PY% -V') do echo [1/4] Using %%v
+for /f "tokens=*" %%v in ('%PY% -V') do echo [1/5] Using %%v
 
 REM --- 2. Application + virtualenv -------------------------------------
-echo [2/4] Installing to %APP_DIR%
+echo [2/5] Installing to %APP_DIR%
 if not exist "%APP_DIR%" mkdir "%APP_DIR%"
 xcopy /E /I /Y /Q "%SRC%trilex" "%APP_DIR%\trilex" >nul
 copy /Y "%SRC%trilex.py" "%APP_DIR%\" >nul
@@ -165,14 +215,38 @@ if exist "%SRC%README.md" copy /Y "%SRC%README.md" "%APP_DIR%\" >nul
 if exist "%SRC%trilex.ico" copy /Y "%SRC%trilex.ico" "%APP_DIR%\" >nul
 
 %PY% -m venv "%APP_DIR%\venv"
-if errorlevel 1 ( echo ERROR: could not create the virtual environment. & pause & exit /b 1 )
+if errorlevel 1 (
+    echo ERROR: could not create the virtual environment.
+    echo If Thriauga is running, close it and run this installer again.
+    pause
+    exit /b 1
+)
 
-echo [3/4] Installing dependencies ^(this downloads ~80 MB^)
+echo [3/5] Installing dependencies ^(this downloads ~80 MB^)
 "%APP_DIR%\venv\Scripts\python.exe" -m pip install --quiet --upgrade pip
 "%APP_DIR%\venv\Scripts\python.exe" -m pip install --quiet -r "%APP_DIR%\requirements.txt"
 if errorlevel 1 ( echo ERROR: dependency installation failed. & pause & exit /b 1 )
 
-REM --- 3. Launcher + Start Menu shortcut -------------------------------
+REM --- 3. Bundled dictionary + media (full package only) ---------------
+set "DATA_DIR=%APPDATA%\trilex"
+if defined TRILEX_DATA set "DATA_DIR=%TRILEX_DATA%"
+set "BUNDLED=0"
+if exist "%SRC%data\" (
+    echo [4/5] Installing bundled dictionary and media to %DATA_DIR%
+    if not exist "%DATA_DIR%" mkdir "%DATA_DIR%"
+    if exist "%SRC%data\media-images.db" copy /Y "%SRC%data\media-images.db" "%DATA_DIR%\" >nul
+    if exist "%SRC%data\media-audio.db" copy /Y "%SRC%data\media-audio.db" "%DATA_DIR%\" >nul
+    if exist "%SRC%data\dict.db.xz" (
+        echo       unpacking dict.db ^(this takes a minute^)
+        "%APP_DIR%\venv\Scripts\python.exe" -c "import lzma,os,shutil,sys;s,d=sys.argv[1],sys.argv[2];t=d+'.part';i=lzma.open(s,'rb');o=open(t,'wb');shutil.copyfileobj(i,o,1<<20);i.close();o.close();os.replace(t,d)" "%SRC%data\dict.db.xz" "%DATA_DIR%\dict.db"
+        if errorlevel 1 ( echo ERROR: could not unpack the dictionary. & pause & exit /b 1 )
+    )
+    set "BUNDLED=1"
+) else (
+    echo [4/5] No bundled data; the dictionary is downloaded on first launch
+)
+
+REM --- 4. Launcher + Start Menu shortcut -------------------------------
 > "%APP_DIR%\Thriauga.cmd" echo @echo off
 >> "%APP_DIR%\Thriauga.cmd" echo start "" "%APP_DIR%\venv\Scripts\pythonw.exe" "%APP_DIR%\trilex.py" %%*
 
@@ -186,10 +260,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
   "if (Test-Path '%APP_DIR%\trilex.ico') { $s.IconLocation='%APP_DIR%\trilex.ico' };" ^
   "$s.Save()" >nul 2>&1
 
-echo [4/4] Done.
+echo [5/5] Done.
 echo.
 echo Thriauga has been added to your Start Menu.
-echo On first launch it downloads the dictionary ^(about 212 MB^).
+if "%BUNDLED%"=="1" (
+    echo The dictionary, images and audio are installed. Nothing more to download.
+) else (
+    echo On first launch it downloads the dictionary ^(about 212 MB^).
+)
 echo.
 pause
 """
@@ -214,19 +292,26 @@ pause
 
 
 def make_icon():
-    """Render the app icon to PNG (and ICO) without needing Qt at build time."""
+    """Render the app icon to PNG (and ICO) without needing Qt at build time.
+
+    Rendering needs Pillow and a CJK font. When either is missing (a Windows
+    build box, say) reuse icons left by an earlier build rather than shipping
+    a blank one.
+    """
+    png, ico = OUT / "trilex.png", OUT / "trilex.ico"
+    have_font = any(os.path.exists(p) for p in CJK_FONT_PATHS)
     try:
         from PIL import Image, ImageDraw, ImageFont
     except ImportError:
-        return None, None
+        have_font = False
+    if not have_font:
+        return (png if png.exists() else None), (ico if ico.exists() else None)
     size = 256
     img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     d.rounded_rectangle([8, 8, size - 8, size - 8], radius=52, fill="#1a5fb4")
     font = None
-    for path in ("/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
-                 "/usr/share/fonts/truetype/noto/NotoSansCJK-Bold.ttc",
-                 "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"):
+    for path in CJK_FONT_PATHS:
         if os.path.exists(path):
             try:
                 font = ImageFont.truetype(path, 132)
@@ -235,9 +320,7 @@ def make_icon():
                 pass
     if font:
         d.text((size / 2, size / 2 - 8), "文", font=font, fill="white", anchor="mm")
-    png = OUT / "trilex.png"
     img.save(png)
-    ico = OUT / "trilex.ico"
     img.save(ico, sizes=[(16, 16), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)])
     return png, ico
 
@@ -250,16 +333,13 @@ def sha256(path):
     return h.hexdigest()
 
 
-def build():
-    OUT.mkdir(parents=True, exist_ok=True)
-    png, ico = make_icon()
-    artifacts = []
-
-    # ---- Linux tar.gz ----
-    tgz = OUT / f"thriauga-{VERSION}-linux.tar.gz"
+def build_linux(png, data_files, suffix=""):
+    tgz = OUT / f"thriauga-{VERSION}-linux{suffix}.tar.gz"
     tgz.unlink(missing_ok=True)
-    with tarfile.open(tgz, "w:gz") as tar:
-        base = f"thriauga-{VERSION}"
+    base = f"thriauga-{VERSION}"
+    # Level 1: the payload of a full archive is xz and media blobs, which gzip
+    # cannot shrink; higher levels only cost minutes.
+    with tarfile.open(tgz, "w:gz", compresslevel=1 if data_files else 9) as tar:
         for rel in source_files():
             tar.add(ROOT / rel, arcname=f"{base}/{rel}")
         for name, text, mode in (("install.sh", INSTALL_SH, 0o755),
@@ -270,26 +350,48 @@ def build():
             tar.addfile(info, io.BytesIO(data))
         if png:
             tar.add(png, arcname=f"{base}/trilex.png")
-    artifacts.append(("linux", tgz))
+        for f in data_files:
+            tar.add(f, arcname=f"{base}/data/{f.name}")
+    return tgz
 
-    # ---- Windows zip ----
-    zpath = OUT / f"thriauga-{VERSION}-windows.zip"
+
+def build_windows(ico, data_files, suffix=""):
+    zpath = OUT / f"thriauga-{VERSION}-windows{suffix}.zip"
     zpath.unlink(missing_ok=True)
+    base = f"thriauga-{VERSION}"
     with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:
-        base = f"thriauga-{VERSION}"
         for rel in source_files():
             z.write(ROOT / rel, f"{base}/{rel}")
         z.writestr(f"{base}/install.bat", INSTALL_BAT.replace("\n", "\r\n"))
         z.writestr(f"{base}/build-exe.bat", BUILD_EXE_BAT.replace("\n", "\r\n"))
         if ico:
             z.write(ico, f"{base}/trilex.ico")
-    artifacts.append(("windows", zpath))
+        for f in data_files:
+            z.write(f, f"{base}/data/{f.name}", compress_type=zipfile.ZIP_STORED)
+    return zpath
+
+
+def build():
+    OUT.mkdir(parents=True, exist_ok=True)
+    png, ico = make_icon()
+    artifacts = [("linux", build_linux(png, [])),
+                 ("windows", build_windows(ico, []))]
+
+    data_files = [PACKS / f for f in DATA_FILES]
+    missing = [f.name for f in data_files if not f.exists()]
+    if missing:
+        print(f"  (no full archives: missing {', '.join(missing)} in {PACKS})")
+    else:
+        artifacts.append(("linux-full", build_linux(png, data_files, "-full")))
+        artifacts.append(("windows-full", build_windows(ico, data_files, "-full")))
 
     index = {"version": VERSION, "built": time.strftime("%Y-%m-%d"), "files": {}}
     for label, path in artifacts:
-        index["files"][label] = {"file": path.name, "bytes": path.stat().st_size,
+        size = path.stat().st_size
+        index["files"][label] = {"file": path.name, "bytes": size,
                                  "sha256": sha256(path)}
-        print(f"  {label:8} {path.name:38} {path.stat().st_size/1024:7.1f} KB")
+        human = f"{size/1048576:7.1f} MB" if size > 1 << 20 else f"{size/1024:7.1f} KB"
+        print(f"  {label:13} {path.name:43} {human}")
     (OUT / "installers.json").write_text(json.dumps(index, indent=2))
     return index
 

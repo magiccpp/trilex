@@ -6,8 +6,8 @@ better than a VPS, and it leaves the server responsible only for the sync API.
 
 Requires the gh CLI, authenticated:  gh auth login
 
-    python -m trilex.build.publish            # publish/refresh v1.0.0
-    python -m trilex.build.publish --tag v1.1 # a different tag
+    python -m trilex.build.publish              # publish/refresh v<VERSION>
+    python -m trilex.build.publish --tag v1.2.0 # a different tag
 """
 import json, shutil, subprocess, sys, time
 from pathlib import Path
@@ -25,8 +25,10 @@ ASSETS = [
     ("dict.db.xz",       PACK_DIR),
     ("media-images.db",  PACK_DIR),
     ("media-audio.db",   PACK_DIR),
-    (f"thriauga-{VERSION}-linux.tar.gz",  DIST),
-    (f"thriauga-{VERSION}-windows.zip",   DIST),
+    (f"thriauga-{VERSION}-linux.tar.gz",       DIST),
+    (f"thriauga-{VERSION}-windows.zip",        DIST),
+    (f"thriauga-{VERSION}-linux-full.tar.gz",  DIST),
+    (f"thriauga-{VERSION}-windows-full.zip",   DIST),
 ]
 
 
@@ -92,12 +94,22 @@ def main():
     if existing:
         print(f"  {tag} already exists — refreshing assets")
     else:
+        full_mb = sum((DIST / n).stat().st_size for n, d in ASSETS
+                      if "-windows-full" in n) / 1048576
         notes = (
             f"Offline English / Svenska / 中文 dictionary.\n\n"
-            f"**Install:** download the archive for your platform below, then "
-            f"run `install.sh` (Linux) or `install.bat` (Windows).\n"
-            f"The dictionary is fetched automatically on first launch; images "
-            f"and audio are optional, from **File → Add-ons**.\n\n"
+            f"**Everything in one download** (~{full_mb:.0f} MB): "
+            f"`thriauga-{VERSION}-windows-full.zip` or "
+            f"`thriauga-{VERSION}-linux-full.tar.gz`. Unpack it, run "
+            f"`install.bat` (Windows) or `install.sh` (Linux), and the "
+            f"dictionary, illustrations and pronunciation audio are all "
+            f"installed. Nothing further is fetched from the network.\n\n"
+            f"**Small installer** (~70 KB): `thriauga-{VERSION}-windows.zip` "
+            f"or `thriauga-{VERSION}-linux.tar.gz`. Same app; the dictionary "
+            f"is fetched on first launch, and images and audio are optional "
+            f"from **File → Add-ons**.\n\n"
+            f"Both need Python 3.10 or newer already installed "
+            f"(`winget install Python.Python.3.12` on Windows).\n\n"
             f"| Asset | Size | Contents |\n|---|---|---|\n"
             + "".join(
                 f"| `{p['file']}` | {p['bytes']/1048576:.0f} MB | "
