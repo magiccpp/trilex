@@ -5,8 +5,8 @@ import csv, faulthandler, sys, time, traceback
 from datetime import date
 from pathlib import Path
 
-from PySide6.QtCore import (QAbstractListModel, QModelIndex, QSettings, QSize,
-                            Qt, QThread, QTimer, QUrl, Signal)
+from PySide6.QtCore import (QAbstractListModel, QEvent, QModelIndex, QSettings,
+                            QSize, Qt, QThread, QTimer, QUrl, Signal)
 from PySide6.QtGui import (QAction, QColor, QDesktopServices, QFont, QIcon,
                            QImage, QKeySequence, QPainter, QPixmap, QShortcut,
                            QTextDocument)
@@ -1132,6 +1132,28 @@ class MainWindow(QMainWindow):
             avail = screen.availableGeometry()
             w, h = min(w, int(avail.width() * 0.9)), min(h, int(avail.height() * 0.9))
         self.resize(w, h)
+
+    def changeEvent(self, ev):
+        # Windows users reported the window "closing" when it lost focus; it
+        # was in fact being minimised. Log every state and activation change
+        # with who holds the foreground, so the log shows what triggered it.
+        if ev.type() in (QEvent.WindowStateChange, QEvent.ActivationChange):
+            try:
+                fg = ""
+                if sys.platform == "win32":
+                    import ctypes
+                    u = ctypes.windll.user32
+                    h = u.GetForegroundWindow()
+                    pid = ctypes.c_ulong()
+                    u.GetWindowThreadProcessId(h, ctypes.byref(pid))
+                    fg = f" fg_hwnd={h} fg_pid={pid.value} own_hwnd={int(self.winId())}"
+                old = ev.oldState() if ev.type() == QEvent.WindowStateChange else None
+                sys.stderr.write(
+                    f"{time.strftime('%H:%M:%S')} {ev.type().name} state={self.windowState()}"
+                    f" old={old} active={self.isActiveWindow()}{fg}\n")
+            except Exception:
+                pass
+        super().changeEvent(ev)
 
     def resizeEvent(self, ev):
         super().resizeEvent(ev)
