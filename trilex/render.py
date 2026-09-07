@@ -166,6 +166,10 @@ def render(res: Result, theme: dict) -> str:
         h.append(f'<div class="from">{_e(res.resolved_from)} is a form of '
                  f'<b>{_e(primary.word)}</b></div>')
     h.append(_head_with_image(res, t))
+    if res.wiktionary_only:
+        h.append('<div class="note">Not in Folkets or CC-CEDICT. Definition and '
+                 'pronunciation from Wiktionary; any translations below are '
+                 'reached through English.</div>')
     if res.also_form_of:
         lg, lemma, tags = res.also_form_of
         h.append(f'<div class="note">also the {_e(tags)} of '

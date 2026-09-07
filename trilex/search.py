@@ -109,6 +109,9 @@ class Result:
     image: dict | None = None
     audio: dict | None = None
     examples: dict[str, list[Example]] = field(default_factory=list and dict)
+    # The bilingual core had nothing; the headword comes from Wiktionary alone,
+    # so translations (if any) are pivot-derived and there is no direct gloss.
+    wiktionary_only: bool = False
 
     @property
     def found(self):
@@ -204,6 +207,33 @@ class Dictionary:
             #    order beats sense count for picking the primary entry.
             return (is_head, script_ok, e.id, e.lang)
         return sorted(by_id.values(), key=rank)
+
+    def _wiktionary_entries(self, nq, q):
+        """Headword-only entries for a word the bilingual core lacks.
+
+        Negative ids mark them as synthetic: nothing else in the database
+        refers to them, and the wordbook stores a snapshot, not an id.
+        """
+        cjk = is_cjk(q)
+        rows = self.con.execute(
+            "SELECT lang, word, pos, ipa FROM wik WHERE norm=? "
+            "ORDER BY (word = ?) DESC, "
+            "         CASE lang WHEN 'en' THEN 0 WHEN 'sv' THEN 1 ELSE 2 END, "
+            "         (lower(coalesce(pos,'')) IN ('name','proper noun')) ASC, id "
+            "LIMIT 8", (nq, q)).fetchall()
+        out, seen = [], set()
+        for r in rows:
+            if (r["lang"] == "zh") != cjk:
+                continue
+            key = (r["lang"], r["word"], r["pos"])
+            if key in seen:
+                continue
+            seen.add(key)
+            extra = {"phonetic": r["ipa"]} if r["ipa"] else {}
+            out.append(Entry(-(len(out) + 1), r["lang"], r["word"], r["pos"], extra))
+            if len(out) >= 4:
+                break
+        return out
 
     def _table_exists(self, name) -> bool:
         """Probe rather than read sqlite_master: the table may live in an
@@ -486,7 +516,15 @@ class Dictionary:
                     # Keep any pinyin hits too, but the lemma now leads.
                     nq, ids = norm(lemma), lemma_ids + [i for i in ids
                                                         if i not in lemma_ids]
-        res.entries = self._load_entries(ids, nq, is_cjk(q))
+        if ids:
+            res.entries = self._load_entries(ids, nq, is_cjk(q))
+        else:
+            # Not in Folkets or CC-CEDICT at all. Wiktionary knows a million
+            # English lemmas to Folkets' 56k, so show its definition,
+            # pronunciation and etymology - and whatever the English pivot can
+            # reach - rather than a bare "not in the dictionary".
+            res.entries = self._wiktionary_entries(nq, q)
+            res.wiktionary_only = bool(res.entries)
 
         # Query-side pivot weights: which English terms does this word mean?
         qp: dict[str, float] = {}
