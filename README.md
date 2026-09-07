@@ -232,7 +232,7 @@ transactional provider instead.
 |---|---|---|
 | [CC-CEDICT](https://www.mdbg.net/chinese/dictionary?page=cc-cedict) | 124,880 Chinese↔English entries | CC BY-SA 4.0 |
 | [Folkets lexikon](https://folkets-lexikon.csc.kth.se/) | 95,443 Swedish↔English entries | CC BY-SA 2.5 |
-| [Wiktionary](https://en.wiktionary.org) via [wiktextract](https://kaikki.org) | 1.6M entries, 550k etymologies, 1.1M inflected forms | CC BY-SA 4.0 / GFDL |
+| [Wiktionary](https://en.wiktionary.org) via [wiktextract](https://kaikki.org) | 1.6M entries, 550k etymologies, 1.1M inflected forms; Swedish and Chinese translations for every English headword Folkets lacks (maths, engineering, science vocabulary) | CC BY-SA 4.0 / GFDL |
 | [Tatoeba](https://tatoeba.org) | 118,692 aligned sentence pairs (English↔Swedish, English↔Chinese) | CC BY 2.0 FR |
 | [Wikipedia / Wikimedia Commons](https://commons.wikimedia.org) | illustrations, free licences only | per-image, shown in the UI |
 
@@ -324,7 +324,7 @@ trilex/
   sync.py         sync client
   render.py       result → HTML (testable without Qt)
   gui.py          PySide6 UI
-  build/          fetch · core · kaikki · forms · examples · senseex · images · merge · trim
+  build/          fetch · core · kaikki · forms · examples · senseex · images · merge · wikt · trim
 ```
 
 `dict.db` is plain SQLite with no extensions, so the same file works unchanged

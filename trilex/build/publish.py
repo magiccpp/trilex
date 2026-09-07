@@ -21,6 +21,14 @@ DIST = ROOT / "data" / "dist"
 REPO = "magiccpp/trilex"
 BASE = f"https://github.com/{REPO}/releases/latest/download"
 
+# One line for the release notes; clear it after publishing.
+CHANGES = ("36k English headwords Folkets lacked (maths, engineering, science, "
+           "medicine, computing) now carry Swedish and Chinese translations from "
+           "Wiktionary, with 33k Swedish and 28k Chinese headwords added for them. "
+           "Words known only to Wiktionary now show their definition, IPA and "
+           "etymology instead of \"not in the dictionary\". Smaller default window; "
+           "crashes are logged to trilex.log in the data folder.")
+
 ASSETS = [
     ("dict.db.xz",       PACK_DIR),
     ("media-images.db",  PACK_DIR),
@@ -104,7 +112,8 @@ def main():
                       if "-windows-full" in n) / 1048576
         notes = (
             f"Offline English / Svenska / 中文 dictionary.\n\n"
-            f"**Everything in one download** (~{full_mb:.0f} MB): "
+            + (f"**What's new:** {CHANGES}\n\n" if CHANGES else "")
+            + f"**Everything in one download** (~{full_mb:.0f} MB): "
             f"`thriauga-{VERSION}-windows-full.zip` or "
             f"`thriauga-{VERSION}-linux-full.tar.gz`. Unpack it, run "
             f"`install.bat` (Windows) or `install.sh` (Linux), and the "

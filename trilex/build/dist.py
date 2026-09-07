@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data"
 OUT = DATA / "dist"
 PACKS = DATA / "packs"
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 
 # Shipped inside the "full" archives, under data/. Already compressed or
 # blob-heavy, so they are stored rather than deflated again.
