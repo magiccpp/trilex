@@ -1,7 +1,7 @@
 """Trilex - offline English / Svenska / 中文 dictionary. PySide6 GUI."""
 from __future__ import annotations
 
-import csv, sys
+import csv, faulthandler, sys, time, traceback
 from datetime import date
 from pathlib import Path
 
@@ -408,6 +408,9 @@ class WordbookPage(QWidget):
         self.table.itemDoubleClicked.connect(self._dbl)
 
         self.count = QLabel()
+        # Informational only (the status bar repeats it), so it must not set
+        # the window's minimum width: let it be clipped when space is short.
+        self.count.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)
         self.sort = QComboBox()
         self.sort.addItems(["Due first", "Recently added", "Alphabetical", "By language"])
         self.sort.currentIndexChanged.connect(self.reload)
@@ -1081,7 +1084,12 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle(APP)
         self.setWindowIcon(app_icon())
-        self.resize(1060, 760)
+        # Remember size and position as they change, not only on a clean
+        # close: a crash or a killed process would otherwise forget them.
+        self._geo_timer = QTimer(self, singleShot=True, interval=600)
+        self._geo_timer.timeout.connect(
+            lambda: self.settings.setValue("geometry", self.saveGeometry()))
+        self._default_size()
 
         self.player = AudioPlayer(self.dic)
         self.search_page = SearchPage(self.dic, self.book, self.theme, self.player)
@@ -1114,6 +1122,26 @@ class MainWindow(QMainWindow):
 
     def theme(self):
         return theme_from(self.palette(), self.font_size)
+
+    def _default_size(self):
+        """A comfortable reading width that still leaves room beside it, and
+        never larger than the screen it opens on."""
+        w, h = 920, 660
+        screen = QApplication.primaryScreen()
+        if screen:
+            avail = screen.availableGeometry()
+            w, h = min(w, int(avail.width() * 0.9)), min(h, int(avail.height() * 0.9))
+        self.resize(w, h)
+
+    def resizeEvent(self, ev):
+        super().resizeEvent(ev)
+        if self.isVisible():
+            self._geo_timer.start()
+
+    def moveEvent(self, ev):
+        super().moveEvent(ev)
+        if self.isVisible():
+            self._geo_timer.start()
 
     def _warm(self):
         """Prime the fuzzy-match pool so the first typo lookup isn't slow."""
@@ -1262,8 +1290,41 @@ class MainWindow(QMainWindow):
         super().closeEvent(ev)
 
 
+def _log_to_file():
+    """Route tracebacks and hard crashes to <data dir>/trilex.log.
+
+    Under pythonw.exe there is no console: sys.stderr is None, so an exception
+    raised in a slot or a paint handler would vanish, and a native crash would
+    just make the window disappear. The log is the only witness. It is
+    truncated when it passes 1 MB so it can never grow without bound.
+    """
+    try:
+        path = db.data_dir() / "trilex.log"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        mode = "w" if path.exists() and path.stat().st_size > 1 << 20 else "a"
+        fh = open(path, mode, encoding="utf-8", buffering=1)
+        if sys.stderr is None:
+            sys.stderr = fh
+        if sys.stdout is None:
+            sys.stdout = fh
+        faulthandler.enable(fh, all_threads=True)
+
+        def hook(t, v, tb):
+            traceback.print_exception(t, v, tb, file=fh)
+            fh.flush()
+        sys.excepthook = hook
+        import PySide6
+        fh.write(f"\n--- {time.strftime('%Y-%m-%d %H:%M:%S')} start  "
+                 f"python {sys.version.split()[0]}  PySide6 {PySide6.__version__}  "
+                 f"{sys.platform}\n")
+        return path
+    except Exception:
+        return None
+
+
 def main(argv=None):
     argv = list(argv if argv is not None else sys.argv)
+    _log_to_file()
     app = QApplication(argv)
     app.setApplicationName(APP)
     app.setWindowIcon(app_icon())
