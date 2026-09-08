@@ -22,7 +22,8 @@ REPO = "magiccpp/trilex"
 BASE = f"https://github.com/{REPO}/releases/latest/download"
 
 # One line for the release notes; clear it after publishing.
-CHANGES = ("Only one Trilex runs at a time: launching it again brings the "
+CHANGES = ("Help → About Trilex shows the version, dictionary size and data "
+           "folder. Only one Trilex runs at a time: launching it again brings the "
            "existing window to the front instead of starting another copy. "
            "Minimising keeps a taskbar button, and the tray icon restores the "
            "window. Since 1.2.0: 36k English headwords Folkets lacked (maths, "

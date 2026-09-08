@@ -1244,6 +1244,7 @@ class MainWindow(QMainWindow):
                             triggered=lambda: self._zoom(-1)))
         h = self.menuBar().addMenu("&Help")
         h.addAction(QAction("Sources && licences", self, triggered=self._about))
+        h.addAction(QAction("About Trilex", self, triggered=self._about_version))
 
     def _shortcuts(self):
         QShortcut(QKeySequence("Ctrl+L"), self, activated=self._focus_search)
@@ -1379,6 +1380,29 @@ class MainWindow(QMainWindow):
                 self.status.showMessage(f"Sync: {r.summary()}", 6000)
         except sync.SyncError:
             pass
+
+    def _about_version(self):
+        from . import __version__
+        import PySide6
+        try:
+            built = self.dcon.execute(
+                "SELECT v FROM meta WHERE k='built'").fetchone()
+            built = built["v"] if built else None
+        except Exception:
+            built = None
+        try:
+            n = self.dcon.execute("SELECT count(*) c FROM entry").fetchone()["c"]
+        except Exception:
+            n = None
+        lines = [f"<b>Þríauga / Trilex {__version__}</b>",
+                 "Offline English / Svenska / 中文 dictionary", ""]
+        if n:
+            lines.append(f"Dictionary: {n:,} entries"
+                         + (f", built {built}" if built else ""))
+        lines += [f"Data folder: {db.data_dir()}",
+                  f"Python {sys.version.split()[0]} · PySide6 {PySide6.__version__}",
+                  '<a href="https://github.com/magiccpp/trilex">github.com/magiccpp/trilex</a>']
+        QMessageBox.about(self, "About Trilex", "<br>".join(lines))
 
     def _about(self):
         QMessageBox.information(self, "Sources & licences", (

@@ -25,7 +25,8 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data"
 OUT = DATA / "dist"
 PACKS = DATA / "packs"
-VERSION = "1.2.1"
+sys.path.insert(0, str(ROOT))
+from trilex import __version__ as VERSION      # one source of truth: trilex/__init__.py
 
 # Shipped inside the "full" archives, under data/. Already compressed or
 # blob-heavy, so they are stored rather than deflated again.
