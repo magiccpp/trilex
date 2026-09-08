@@ -1,12 +1,13 @@
 """Trilex - offline English / Svenska / 中文 dictionary. PySide6 GUI."""
 from __future__ import annotations
 
-import csv, faulthandler, sys, time, traceback
+import csv, faulthandler, getpass, os, sys, time, traceback
 from datetime import date
 from pathlib import Path
 
-from PySide6.QtCore import (QAbstractListModel, QEvent, QModelIndex, QSettings,
-                            QSize, Qt, QThread, QTimer, QUrl, Signal)
+from PySide6.QtCore import (QAbstractListModel, QEvent, QModelIndex, QObject,
+                            QSettings, QSize, Qt, QThread, QTimer, QUrl, Signal)
+from PySide6.QtNetwork import QLocalServer, QLocalSocket
 from PySide6.QtGui import (QAction, QColor, QDesktopServices, QFont, QIcon,
                            QImage, QKeySequence, QPainter, QPixmap, QShortcut,
                            QTextDocument)
@@ -36,6 +37,58 @@ from .search import LANG_NAME, Dictionary
 APP = "Trilex"
 CJK_FONTS = ["Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
              "Source Han Sans SC", "WenQuanYi Micro Hei", "Droid Sans Fallback"]
+# One running copy per user: a second launch just brings the first forward.
+INSTANCE_KEY = f"thriauga-{getpass.getuser()}"
+
+
+class _SingleInstance(QObject):
+    """Local socket that a second launch knocks on instead of starting up.
+
+    The server greets with its pid so that, on Windows, the newcomer can grant
+    it the right to take the foreground (AllowSetForegroundWindow); without
+    that the restored window only flashes on the taskbar.
+    """
+
+    def __init__(self, window):
+        super().__init__(window)
+        self.window = window
+        QLocalServer.removeServer(INSTANCE_KEY)          # stale unix socket
+        self.server = QLocalServer(self)
+        self.server.newConnection.connect(self._accept)
+        self.server.listen(INSTANCE_KEY)
+
+    def _accept(self):
+        sock = self.server.nextPendingConnection()
+        if not sock:
+            return
+        sock.write(f"{os.getpid()}\n".encode())
+        sock.flush()
+        sock.readyRead.connect(lambda: self._read(sock))
+        sock.disconnected.connect(sock.deleteLater)
+
+    def _read(self, sock):
+        if b"show" in bytes(sock.readAll()):
+            self.window.bring_to_front()
+
+    @staticmethod
+    def already_running() -> bool:
+        """Hand over to a running instance, if any."""
+        sock = QLocalSocket()
+        sock.connectToServer(INSTANCE_KEY)
+        if not sock.waitForConnected(400):
+            return False
+        if sock.waitForReadyRead(400):
+            try:
+                pid = int(bytes(sock.readLine()).strip() or 0)
+                if pid and sys.platform == "win32":
+                    import ctypes
+                    ctypes.windll.user32.AllowSetForegroundWindow(pid)
+            except Exception:
+                pass
+        sock.write(b"show\n")
+        sock.waitForBytesWritten(400)
+        sock.disconnectFromServer()
+        return True
 
 
 def theme_from(pal, size=10):
@@ -1251,22 +1304,57 @@ class MainWindow(QMainWindow):
             return
         self.tray = QSystemTrayIcon(app_icon(), self)
         menu = QMenu()
-        menu.addAction(QAction("Open Trilex", self, triggered=self.showNormal))
+        menu.addAction(QAction("Open Trilex", self, triggered=self.bring_to_front))
         menu.addAction(QAction("Review now", self,
-                               triggered=lambda: (self.showNormal(),
+                               triggered=lambda: (self.bring_to_front(),
                                                   self.tabs.setCurrentIndex(2))))
         menu.addSeparator()
         menu.addAction(QAction("Quit", self, triggered=QApplication.quit))
         self.tray.setContextMenu(menu)
         self.tray.setToolTip(APP)
         self.tray.activated.connect(
-            lambda r: self.showNormal() if r == QSystemTrayIcon.Trigger else None)
+            lambda r: self.bring_to_front()
+            if r in (QSystemTrayIcon.Trigger, QSystemTrayIcon.DoubleClick) else None)
         self.tray.show()
         due = self.book.counts()["due"]
         if due:
             QTimer.singleShot(1200, lambda: self.tray.showMessage(
                 f"{due} word{'s' if due != 1 else ''} to review",
                 "Open Trilex and press Ctrl+3 to start.", app_icon(), 8000))
+
+    def bring_to_front(self):
+        """Restore from minimised or hidden, and take focus."""
+        if self.isMinimized():
+            self.showNormal()
+        else:
+            self.show()
+        self.raise_()
+        self.activateWindow()
+        if sys.platform == "win32":
+            try:
+                import ctypes
+                u = ctypes.windll.user32
+                h = int(self.winId())
+                if u.IsIconic(h):
+                    u.ShowWindow(h, 9)               # SW_RESTORE
+                u.SetForegroundWindow(h)
+            except Exception:
+                pass
+
+    def ensure_taskbar_button(self):
+        """Windows: insist on a taskbar button, so a minimised window can
+        always be found again. Qt normally gives one, but make it explicit."""
+        if sys.platform != "win32":
+            return
+        try:
+            import ctypes
+            u = ctypes.windll.user32
+            h = int(self.winId())
+            GWL_EXSTYLE, WS_EX_APPWINDOW, WS_EX_TOOLWINDOW = -20, 0x40000, 0x80
+            ex = u.GetWindowLongW(h, GWL_EXSTYLE)
+            u.SetWindowLongW(h, GWL_EXSTYLE, (ex | WS_EX_APPWINDOW) & ~WS_EX_TOOLWINDOW)
+        except Exception:
+            pass
 
     def open_addons(self):
         AddonsDialog(self.dic, self.dict_path, self).exec()
@@ -1347,7 +1435,17 @@ def _log_to_file():
 def main(argv=None):
     argv = list(argv if argv is not None else sys.argv)
     _log_to_file()
+    if sys.platform == "win32":
+        # A stable identity for the taskbar: groups the window under the app's
+        # own icon rather than a generic python.exe button.
+        try:
+            import ctypes
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("magiccpp.Thriauga")
+        except Exception:
+            pass
     app = QApplication(argv)
+    if _SingleInstance.already_running():
+        return 0
     app.setApplicationName(APP)
     app.setWindowIcon(app_icon())
     f = app.font()
@@ -1369,7 +1467,9 @@ def main(argv=None):
             return 1
         path = db.data_dir() / "dict.db"
     w = MainWindow(dict_path=path)
+    w.ensure_taskbar_button()        # before show: the taskbar reads styles then
     w.show()
+    w._instance = _SingleInstance(w)
     return app.exec()
 
 
