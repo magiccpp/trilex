@@ -28,7 +28,7 @@ from . import db, packs, render, srs, sync, theme
 # without sound - so the import is optional.
 try:
     from PySide6.QtCore import QBuffer, QByteArray, QIODevice
-    from PySide6.QtMultimedia import QAudioOutput, QMediaPlayer
+    from PySide6.QtMultimedia import QAudioOutput, QMediaDevices, QMediaPlayer
     AUDIO_OK = True
 except Exception:                                        # pragma: no cover
     AUDIO_OK = False
@@ -148,6 +148,13 @@ class AudioPlayer:
             return False
         try:
             self._player.stop()
+            # QAudioOutput binds to the default device when it is created and
+            # never follows it. The app runs for days in the tray, so after a
+            # headset is plugged in or the Windows default changes, sound kept
+            # going to the old device. Re-resolve it on every play.
+            dev = QMediaDevices.defaultAudioOutput()
+            if dev.id() != self._out.device().id():
+                self._out.setDevice(dev)
             buf = QBuffer()
             buf.setData(QByteArray(bytes(blob)))
             buf.open(QIODevice.ReadOnly)
