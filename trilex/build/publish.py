@@ -22,15 +22,12 @@ REPO = "magiccpp/trilex"
 BASE = f"https://github.com/{REPO}/releases/latest/download"
 
 # One line for the release notes; clear it after publishing.
-CHANGES = ("Help → About Trilex shows the version, dictionary size and data "
-           "folder. Only one Trilex runs at a time: launching it again brings the "
-           "existing window to the front instead of starting another copy. "
-           "Minimising keeps a taskbar button, and the tray icon restores the "
-           "window. Since 1.2.0: 36k English headwords Folkets lacked (maths, "
-           "engineering, science, medicine, computing) carry Swedish and Chinese "
-           "translations from Wiktionary, with 33k Swedish and 28k Chinese "
-           "headwords added for them; words known only to Wiktionary show their "
-           "definition, IPA and etymology.")
+CHANGES = ("Pronunciation audio now follows the system's default output device "
+           "on every play; before, a copy left running in the tray kept playing "
+           "to whichever device was the default when it started, which sounded "
+           "like no audio at all. Since 1.3.0: Help → About Trilex shows the "
+           "version; only one Trilex runs at a time; minimising keeps a taskbar "
+           "button and the tray icon restores the window.")
 
 ASSETS = [
     ("dict.db.xz",       PACK_DIR),
