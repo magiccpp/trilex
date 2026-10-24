@@ -77,7 +77,7 @@ public extension Page {
     static let throughEnglishNote = "Matched through English — no direct Chinese–Swedish source exists."
     static let noEtymologyNote = "No etymology recorded for this word."
 
-    init(_ res: Result) {
+    init(_ res: LookupResult) {
         query = res.query
         found = res.found
         didYouMean = res.didYouMean

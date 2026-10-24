@@ -95,7 +95,7 @@ final class PackTests: XCTestCase {
         XCTAssertEqual(api.manifestURL, "https://example.test/thriauga/v1/packs")
         XCTAssertEqual(api.parse(["packs": [["name": "images", "file": "media-images.db", "bytes": 5]],
                                   "dictionary_mobile": ["file": "dict-mobile.db.xz", "bytes": 1]])
-            .preferredDictionary?.url, "https://example.test/thriauga/v1/dictionary")
+            .preferredDictionary?.url, "https://example.test/thriauga/v1/dictionary/mobile")
     }
 
     func testAttachingAPackLightsUpAudio() throws {
@@ -142,5 +142,27 @@ final class PackTests: XCTestCase {
         let t0 = Date()
         XCTAssertEqual(lex.didYouMean("watter").first, Suggestion(word: "water", lang: "en"))
         XCTAssertLessThan(Date().timeIntervalSince(t0), 2.0)
+    }
+}
+
+final class XZTests: XCTestCase {
+    /// The dictionary is published as xz (Python's lzma, CRC64 check). Only
+    /// Apple platforms decode it; elsewhere the download refuses cleanly.
+    func testDecodesPythonXZInChunks() throws {
+        let out = Fixture.tempDir().appendingPathComponent("dict.sql")
+        let packed = try Data(contentsOf: Fixture.url("dict.sql", "xz"))
+        #if canImport(Compression)
+        let sink = try Sink(out, xz: true)
+        var i = 0
+        while i < packed.count {
+            try sink.write(packed.subdata(in: i..<min(packed.count, i + 1000)))
+            i += 1000
+        }
+        try sink.finish()
+        XCTAssertEqual(try Data(contentsOf: out), try Data(contentsOf: Fixture.url("dict", "sql")))
+        #else
+        XCTAssertThrowsError(try Sink(out, xz: true))
+        XCTAssertFalse(packed.isEmpty)
+        #endif
     }
 }

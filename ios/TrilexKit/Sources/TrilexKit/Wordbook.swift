@@ -347,7 +347,7 @@ public final class Wordbook: @unchecked Sendable {
     }
 }
 
-public extension Result {
+public extension LookupResult {
     /// What a saved card remembers about the word, so it still renders if
     /// the dictionary is replaced. Same shape as the desktop's snapshot.
     var snapshot: JSONValue? {

@@ -29,6 +29,9 @@ CHANGES = ("Pronunciation audio now follows the system's default output device "
            "version; only one Trilex runs at a time; minimising keeps a taskbar "
            "button and the tray icon restores the window.")
 
+# The phone-sized dictionary (trilex.build.trim) is uploaded when present.
+MOBILE = ("dict-mobile.db.xz", DIST)
+
 ASSETS = [
     ("dict.db.xz",       PACK_DIR),
     ("media-images.db",  PACK_DIR),
@@ -78,6 +81,10 @@ def build_manifest():
         p["url"] = f"{BASE}/{p['file']}"
     if manifest.get("dictionary"):
         manifest["dictionary"]["url"] = f"{BASE}/{manifest['dictionary']['file']}"
+    if manifest.get("dictionary_mobile") and (MOBILE[1] / MOBILE[0]).exists():
+        manifest["dictionary_mobile"]["url"] = f"{BASE}/{MOBILE[0]}"
+    else:
+        manifest.pop("dictionary_mobile", None)
     out = PACK_DIR / "manifest.json"
     out.write_text(json.dumps(manifest, indent=2))
     return out, manifest
@@ -140,7 +147,8 @@ def main():
            "--title", f"Þríauga {VERSION}", "--notes", notes)
 
     print("[4/4] uploading assets (large files take a few minutes)")
-    files = [str(d / n) for n, d in ASSETS] + [str(mf_path)]
+    assets = ASSETS + ([MOBILE] if mf.get("dictionary_mobile") else [])
+    files = [str(d / n) for n, d in assets] + [str(mf_path)]
     for f in files:
         size = Path(f).stat().st_size / 1048576
         print(f"  uploading {Path(f).name} ({size:.1f} MB) ...", flush=True)

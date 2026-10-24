@@ -63,7 +63,7 @@ func assertJSONEqual(_ a: JSONValue, _ b: JSONValue, path: String = "$",
 }
 
 /// The same shape make_fixture.py writes for a desktop result.
-func json(_ r: Result) -> JSONValue {
+func json(_ r: LookupResult) -> JSONValue {
     func s(_ v: String?) -> JSONValue { .of(v) }
     func i(_ v: Int?) -> JSONValue { v.map { .number(Double($0)) } ?? .null }
     func strs(_ v: [String]) -> JSONValue { .array(v.map { .string($0) }) }

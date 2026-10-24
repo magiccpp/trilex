@@ -8,7 +8,7 @@ carried over to the iPhone port fails a test instead of drifting silently.
 
     python ios/TrilexKit/Tests/make_fixture.py      (needs rapidfuzz)
 """
-import json, sqlite3, sys
+import json, lzma, sqlite3, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -198,7 +198,11 @@ def main():
     con = sqlite3.connect(":memory:")
     con.row_factory = sqlite3.Row
     build(con)
-    (OUT / "dict.sql").write_text("\n".join(con.iterdump()) + "\n", encoding="utf-8")
+    sql = "\n".join(con.iterdump()) + "\n"
+    (OUT / "dict.sql").write_text(sql, encoding="utf-8")
+    # The published dictionary is xz with the default CRC64 check; the iOS
+    # app must decode exactly that with Apple's Compression framework.
+    (OUT / "dict.sql.xz").write_bytes(lzma.compress(sql.encode("utf-8")))
 
     d = Dictionary(con)
     expected = {

@@ -86,11 +86,13 @@ public struct Row {
 // SQLITE_TRANSIENT is a macro the importer cannot see.
 private let TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
-/// One connection. Opened in serialized mode, so it is safe to share across
-/// threads; callers that also keep Swift-side caches add their own lock.
+/// One connection, safe to share across threads. SQLite's serialized mode
+/// protects single statements; `lock` also keeps a transaction whole, so a
+/// background sync and a review on the main thread cannot interleave.
 public final class SQLiteDB: @unchecked Sendable {
     let handle: OpaquePointer
     public let path: String
+    private let lock = NSRecursiveLock()
 
     public init(path: String, readOnly: Bool = false) throws {
         var h: OpaquePointer?
@@ -115,6 +117,8 @@ public final class SQLiteDB: @unchecked Sendable {
 
     /// Run one or more statements that take no parameters (schema scripts).
     public func execute(_ sql: String) throws {
+        lock.lock()
+        defer { lock.unlock() }
         var err: UnsafeMutablePointer<CChar>?
         let rc = sqlite3_exec(handle, sql, nil, nil, &err)
         if rc != SQLITE_OK {
@@ -151,6 +155,8 @@ public final class SQLiteDB: @unchecked Sendable {
 
     /// Every row a query returns.
     public func query(_ sql: String, _ args: [SQLValue] = []) throws -> [Row] {
+        lock.lock()
+        defer { lock.unlock() }
         let st = try prepare(sql, args)
         defer { sqlite3_finalize(st) }
         let n = sqlite3_column_count(st)
@@ -194,6 +200,8 @@ public final class SQLiteDB: @unchecked Sendable {
     /// A statement run for its effect (INSERT, UPDATE, DELETE, ATTACH...).
     @discardableResult
     public func run(_ sql: String, _ args: [SQLValue] = []) throws -> Int {
+        lock.lock()
+        defer { lock.unlock() }
         let st = try prepare(sql, args)
         defer { sqlite3_finalize(st) }
         while true {
@@ -205,6 +213,8 @@ public final class SQLiteDB: @unchecked Sendable {
     }
 
     public func transaction<T>(_ body: () throws -> T) throws -> T {
+        lock.lock()
+        defer { lock.unlock() }
         try execute("BEGIN")
         do {
             let v = try body()

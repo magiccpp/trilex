@@ -105,7 +105,7 @@ public struct Suggestion: Hashable, Sendable {
     public let lang: String
 }
 
-public struct Result: Sendable {
+public struct LookupResult: Sendable {
     public let query: String
     public var entries: [Entry] = []
     public var related: [String: [Related]] = [:]
@@ -129,6 +129,11 @@ public struct Result: Sendable {
     public var wiktionaryOnly = false
 
     public var found: Bool { !entries.isEmpty }
+
+    /// An empty result: nothing found for `query`.
+    public init(query: String) {
+        self.query = query
+    }
 
     mutating func setExamples(_ lang: String, _ items: [Example]) {
         if let i = examples.firstIndex(where: { $0.lang == lang }) {
@@ -220,12 +225,21 @@ struct FuzzBucket {
 public final class Lexicon: @unchecked Sendable {
     public let db: SQLiteDB
     private let lock = NSRecursiveLock()
+    // The fuzzy pool takes seconds to build on a phone; it has its own lock
+    // so autocomplete and lookups never wait behind it.
+    private let fuzzLock = NSLock()
     private var fuzzCache: [String: FuzzBucket]?
     private var idfCache: [String: Double] = [:]
     private var probed: [String: Bool] = [:]
 
     public init(db: SQLiteDB) {
         self.db = db
+    }
+
+    /// False for a missing, truncated or foreign file.
+    public var isUsable: Bool {
+        (try? db.first("SELECT 1 FROM entry LIMIT 1")) != nil
+            && (try? db.first("SELECT 1 FROM vocab LIMIT 1")) != nil
     }
 
     private func locked<T>(_ body: () throws -> T) rethrows -> T {
@@ -361,6 +375,8 @@ public final class Lexicon: @unchecked Sendable {
     /// "corrected" to the headword 'A'. A similarity cutoff alone does not
     /// achieve that - short strings score deceptively well.
     func fuzzPool() -> [String: FuzzBucket] {
+        fuzzLock.lock()
+        defer { fuzzLock.unlock() }
         if let p = fuzzCache { return p }
         var pool: [String: FuzzBucket] = [:]
         for r in q("SELECT norm, lang, disp FROM vocab WHERE core=1") {
@@ -380,7 +396,7 @@ public final class Lexicon: @unchecked Sendable {
     /// Build the fuzzy pool ahead of time, so the first typo is answered
     /// without a pause. Safe to call from a background thread.
     public func warmUp() {
-        locked { _ = fuzzPool() }
+        _ = fuzzPool()
     }
 
     /// Nearest real headwords for a query that matched nothing.
@@ -388,7 +404,7 @@ public final class Lexicon: @unchecked Sendable {
     /// Stays inside the query's own script: a Latin typo should never be
     /// answered with Chinese characters.
     public func didYouMean(_ query: String, limit: Int = 8, window: Int = 2) -> [Suggestion] {
-        locked {
+        do {
             let pool = fuzzPool()
             let lq = Norm.loose(query).unicodeScalars.map(\.value)
             guard !lq.isEmpty else { return [] }
@@ -567,12 +583,12 @@ public final class Lexicon: @unchecked Sendable {
     }
 
     // ------------------------------------------------------------------ lookup
-    public func lookup(_ query: String, maxRelated: Int = 18) -> Result {
+    public func lookup(_ query: String, maxRelated: Int = 18) -> LookupResult {
         locked { lookupLocked(query, maxRelated: maxRelated) }
     }
 
-    private func lookupLocked(_ query: String, maxRelated: Int) -> Result {
-        var res = Result(query: query)
+    private func lookupLocked(_ query: String, maxRelated: Int) -> LookupResult {
+        var res = LookupResult(query: query)
         var nq = Norm.norm(query)
         guard !nq.isEmpty else { return res }
         let cjk = Norm.isCJK(query)
@@ -762,7 +778,7 @@ public final class Lexicon: @unchecked Sendable {
 
     /// Etymology for the searched word plus the best equivalent in each of
     /// the other two languages - so one search explains all three.
-    private func etymologies(_ res: Result) -> [Etymology] {
+    private func etymologies(_ res: LookupResult) -> [Etymology] {
         var want: [(String, String)] = []
         var seen = Set<String>()
         for e in res.entries {

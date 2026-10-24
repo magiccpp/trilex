@@ -53,6 +53,10 @@ All require **Python 3.10+** already present (`winget install
 Python.Python.3.12` on Windows); each then builds its own isolated virtualenv,
 installs a launcher and a menu shortcut.
 
+**iPhone:** a native SwiftUI app lives in [`ios/`](ios/README.md). It reads the
+same dictionary (downloaded once on first launch), and syncs with the
+desktop's wordbook.
+
 > **No native Windows `.exe` is provided.** PyInstaller must run on the
 > platform it targets, and this project is built on Linux. The Windows archive
 > includes `build-exe.bat`, which produces a standalone `Thriauga.exe` when run
@@ -89,7 +93,7 @@ the last committed byte offset.
 .venv/bin/python -m trilex.build.images 12000    # illustrations (~90 min)
 .venv/bin/python -m trilex.build.audio           # pronunciation audio (hours)
 .venv/bin/python -m trilex.build.pack            # split media into add-on packs
-.venv/bin/python -m trilex.build.trim            # smaller DB for mobile
+.venv/bin/python -m trilex.build.trim            # smaller DB for the iPhone app
 ```
 
 ### Optional add-ons
@@ -328,4 +332,7 @@ trilex/
 ```
 
 `dict.db` is plain SQLite with no extensions, so the same file works unchanged
-from any language — which is what an iOS port would read.
+from any language — which is what the iPhone app in `ios/` reads. Its
+`TrilexKit` package is a Swift port of `norm`, `search`, `forgetting`, `srs`,
+`sync` and `packs`, held to the Python answers by parity tests; see
+[ios/README.md](ios/README.md).

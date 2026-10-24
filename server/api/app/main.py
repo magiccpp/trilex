@@ -276,6 +276,9 @@ def list_packs():
     # Only advertise packs whose file is actually present.
     data["packs"] = [p for p in data.get("packs", [])
                      if (PACK_DIR / p.get("file", "")).exists()]
+    for key in ("dictionary", "dictionary_mobile"):
+        if key in data and not (PACK_DIR / data[key].get("file", "")).exists():
+            del data[key]
     return data
 
 
@@ -310,6 +313,15 @@ def download_dictionary():
     path = PACK_DIR / "dict.db.xz"
     if not path.is_file():
         raise HTTPException(404, "dictionary not published")
+    return FileResponse(path, media_type="application/x-xz", filename=path.name)
+
+
+@app.get("/v1/dictionary/mobile")
+def download_mobile_dictionary():
+    """The trimmed dictionary the iPhone app fetches on first run."""
+    path = PACK_DIR / "dict-mobile.db.xz"
+    if not path.is_file():
+        raise HTTPException(404, "mobile dictionary not published")
     return FileResponse(path, media_type="application/x-xz", filename=path.name)
 
 

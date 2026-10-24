@@ -255,7 +255,7 @@ final class Sink {
     }
 }
 
-public typealias Progress = @Sendable (Int64, Int64) -> Void
+public typealias ProgressHandler = @Sendable (Int64, Int64) -> Void
 
 public final class PackClient: @unchecked Sendable {
     public let baseURL: String
@@ -279,8 +279,11 @@ public final class PackClient: @unchecked Sendable {
         if let u = entry["url"] as? String, !u.isEmpty { return u }
         let file = entry["file"] as? String ?? ""
         if isStatic { return "\(baseURL)/\(file)" }
-        return kind == "dictionary" ? "\(baseURL)/v1/dictionary"
-            : "\(baseURL)/v1/packs/\(entry["name"] as? String ?? "")"
+        switch kind {
+        case "dictionary": return "\(baseURL)/v1/dictionary"
+        case "dictionary_mobile": return "\(baseURL)/v1/dictionary/mobile"
+        default: return "\(baseURL)/v1/packs/\(entry["name"] as? String ?? "")"
+        }
     }
 
     public func manifest() async throws -> Manifest {
@@ -318,7 +321,7 @@ public final class PackClient: @unchecked Sendable {
                                   uncompressed: Int64(jsonNumber(d["uncompressed"]) ?? 0),
                                   sha256: d["sha256"] as? String ?? "",
                                   built: d["built"] as? String ?? "",
-                                  url: assetURL(d, kind: "dictionary"))
+                                  url: assetURL(d, kind: key))
         }
         m.dictionary = dict("dictionary")
         m.mobileDictionary = dict("dictionary_mobile")
@@ -335,7 +338,7 @@ public final class PackClient: @unchecked Sendable {
     /// Fetch a pack, resuming any partial file, then verify and install.
     /// Cancelling the task leaves the .part file so a later attempt continues.
     @discardableResult
-    public func download(_ pack: PackInfo, progress: Progress? = nil) async throws -> URL {
+    public func download(_ pack: PackInfo, progress: ProgressHandler? = nil) async throws -> URL {
         let fm = FileManager.default
         try fm.createDirectory(at: paths.base, withIntermediateDirectories: true)
         let final = paths.pack(pack.name)
@@ -387,13 +390,12 @@ public final class PackClient: @unchecked Sendable {
         return final
     }
 
-    /// Fetch and decompress the dictionary in one pass. The caller must close
-    /// any open connection to the old dictionary before this replaces it.
-    @discardableResult
-    public func downloadDictionary(_ info: DictionaryInfo, progress: Progress? = nil) async throws -> URL {
+    /// Fetch and decompress the dictionary in one pass, into a staging file
+    /// beside the live one. Nothing in use is touched until
+    /// `installDictionary`, so a failed or cancelled download costs nothing.
+    public func downloadDictionary(_ info: DictionaryInfo, progress: ProgressHandler? = nil) async throws -> URL {
         let fm = FileManager.default
         try fm.createDirectory(at: paths.base, withIntermediateDirectories: true)
-        let final = paths.dictionary
         let part = paths.base.appendingPathComponent("dict.db.part")
         try? fm.removeItem(at: part)
         guard let url = URL(string: info.url) else { throw PackError("Bad address \(info.url)") }
@@ -424,10 +426,19 @@ public final class PackClient: @unchecked Sendable {
             try? fm.removeItem(at: part)
             throw PackError("Checksum mismatch — the download was corrupted")
         }
+        return part
+    }
+
+    /// Swap a staged download in as the dictionary. Close every connection
+    /// to the old one first.
+    @discardableResult
+    public func installDictionary(staged: URL) throws -> URL {
+        let fm = FileManager.default
+        let final = paths.dictionary
         for suffix in ["", "-wal", "-shm"] {
             try? fm.removeItem(at: URL(fileURLWithPath: final.path + suffix))
         }
-        try fm.moveItem(at: part, to: final)
+        try fm.moveItem(at: staged, to: final)
         TrilexPaths.excludeFromBackup(final)
         return final
     }
