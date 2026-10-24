@@ -1,0 +1,3271 @@
+{
+ "fmt_interval": [
+  [
+   0.5,
+   "today"
+  ],
+  [
+   1,
+   "1d"
+  ],
+  [
+   12.4,
+   "12d"
+  ],
+  [
+   45,
+   "1.5mo"
+  ],
+  [
+   400,
+   "1.1y"
+  ],
+  [
+   29.6,
+   "30d"
+  ]
+ ],
+ "forgetting": [
+  {
+   "difficulty": 5.1618,
+   "elapsed": 0,
+   "grade": 2,
+   "lapses": 0,
+   "next": 3.71,
+   "next_85": 6.08,
+   "preview": {
+    "0": 1.48,
+    "1": 6.78,
+    "2": 17.22,
+    "3": 42.56
+   },
+   "reps": 1,
+   "stability": 3.7145
+  },
+  {
+   "difficulty": 5.1236762,
+   "elapsed": 3,
+   "grade": 2,
+   "lapses": 0,
+   "next": 12.26,
+   "next_85": 20.08,
+   "preview": {
+    "0": 2.61,
+    "1": 15.15,
+    "2": 24.96,
+    "3": 48.79
+   },
+   "reps": 2,
+   "stability": 12.2623505597587
+  },
+  {
+   "difficulty": 6.8260892378,
+   "elapsed": 10,
+   "grade": 0,
+   "lapses": 1,
+   "next": 2.78,
+   "next_85": 4.55,
+   "preview": {
+    "0": 1.26,
+    "1": 4.97,
+    "2": 12.42,
+    "3": 30.49
+   },
+   "reps": 3,
+   "stability": 2.7787944100654918
+  },
+  {
+   "difficulty": 7.6060499714282,
+   "elapsed": 2,
+   "grade": 1,
+   "lapses": 1,
+   "next": 3.75,
+   "next_85": 6.14,
+   "preview": {
+    "0": 1.45,
+    "1": 5.53,
+    "2": 11.6,
+    "3": 26.33
+   },
+   "reps": 4,
+   "stability": 3.750620164882366
+  },
+  {
+   "difficulty": 6.6224769223139255,
+   "elapsed": 20,
+   "grade": 3,
+   "lapses": 1,
+   "next": 69.98,
+   "next_85": 114.59,
+   "preview": {
+    "0": 5.49,
+    "1": 71.74,
+    "2": 77.72,
+    "3": 92.24
+   },
+   "reps": 5,
+   "stability": 69.98078187456797
+  },
+  {
+   "difficulty": 6.539072137722194,
+   "elapsed": 0,
+   "grade": 2,
+   "lapses": 1,
+   "next": 69.98,
+   "next_85": 114.59,
+   "preview": {
+    "0": 5.5,
+    "1": 71.77,
+    "2": 77.87,
+    "3": 92.66
+   },
+   "reps": 6,
+   "stability": 69.98078187456797
+  },
+  {
+   "difficulty": 8.197607901452805,
+   "elapsed": 400,
+   "grade": 0,
+   "lapses": 2,
+   "next": 9.4,
+   "next_85": 15.4,
+   "preview": {
+    "0": 2.22,
+    "1": 10.81,
+    "2": 15.6,
+    "3": 27.23
+   },
+   "reps": 7,
+   "stability": 9.404167605458413
+  }
+ ],
+ "lookups": [
+  {
+   "also_form_of": null,
+   "audio": {
+    "accent": "US",
+    "bytes": 14,
+    "fname": "En-us-water.ogg",
+    "word": "water"
+   },
+   "definitions": {
+    "en": [
+     "A clear liquid",
+     "The liquid in rivers and lakes",
+     "A surname",
+     "To pour water on"
+    ]
+   },
+   "did_you_mean": [],
+   "direct": {
+    "sv": [
+     "vatten",
+     "vattna",
+     "Water (efternamn)"
+    ]
+   },
+   "entries": [
+    {
+     "id": 2,
+     "lang": "en",
+     "pos": "nn",
+     "reading": null,
+     "senses": [
+      [
+       "sv",
+       "vatten"
+      ]
+     ],
+     "traditional": null,
+     "word": "water"
+    },
+    {
+     "id": 3,
+     "lang": "en",
+     "pos": "vb",
+     "reading": null,
+     "senses": [
+      [
+       "sv",
+       "vattna"
+      ]
+     ],
+     "traditional": null,
+     "word": "water"
+    },
+    {
+     "id": 18,
+     "lang": "en",
+     "pos": "pm",
+     "reading": null,
+     "senses": [
+      [
+       "sv",
+       "Water (efternamn)"
+      ]
+     ],
+     "traditional": null,
+     "word": "Water"
+    }
+   ],
+   "etymologies": [
+    [
+     "en",
+     "water",
+     "noun",
+     "/ˈwɔːtə/",
+     "From Middle English water, from Old English wæter, from Proto-Germanic *watōr.",
+     "A clear liquid | The liquid in rivers and lakes"
+    ],
+    [
+     "sv",
+     "vatten",
+     "noun",
+     "/ˈvatːɛn/",
+     "From Old Swedish vatn, from Old Norse vatn.",
+     "en genomskinlig vätska"
+    ],
+    [
+     "zh",
+     "水",
+     "character",
+     null,
+     "Pictogram of flowing water.",
+     "water"
+    ]
+   ],
+   "examples": [
+    [
+     "en",
+     [
+      [
+       "I drink water every day.",
+       "Jag dricker vatten varje dag.",
+       "sv",
+       "tatoeba"
+      ],
+      [
+       "Water is wet.",
+       null,
+       null,
+       "wikt-sense"
+      ],
+      [
+       "Could I have some water?",
+       "我可以喝点水吗？",
+       "zh",
+       "tatoeba"
+      ]
+     ]
+    ]
+   ],
+   "image": {
+    "artist": "A. Photographer",
+    "h": 60,
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Water.jpg",
+    "w": 80,
+    "word": "water"
+   },
+   "inflections": {
+    "en": [
+     [
+      "waters",
+      "plural",
+      "plural"
+     ]
+    ]
+   },
+   "query": "water",
+   "related": {
+    "sv": [
+     {
+      "entry_id": 1,
+      "glosses": [
+       "water"
+      ],
+      "reading": "vat:en",
+      "score": 0.41905978419640516,
+      "via": [
+       "water"
+      ],
+      "word": "vatten"
+     }
+    ],
+    "zh": [
+     {
+      "entry_id": 4,
+      "glosses": [
+       "water",
+       "river"
+      ],
+      "reading": "shuǐ",
+      "score": 0.41905978419640516,
+      "via": [
+       "water"
+      ],
+      "word": "水"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": {
+    "accent": "US",
+    "bytes": 14,
+    "fname": "En-us-water.ogg",
+    "word": "water"
+   },
+   "definitions": {
+    "en": [
+     "A clear liquid",
+     "The liquid in rivers and lakes",
+     "A surname",
+     "To pour water on"
+    ]
+   },
+   "did_you_mean": [],
+   "direct": {
+    "sv": [
+     "vatten",
+     "vattna",
+     "Water (efternamn)"
+    ]
+   },
+   "entries": [
+    {
+     "id": 2,
+     "lang": "en",
+     "pos": "nn",
+     "reading": null,
+     "senses": [
+      [
+       "sv",
+       "vatten"
+      ]
+     ],
+     "traditional": null,
+     "word": "water"
+    },
+    {
+     "id": 3,
+     "lang": "en",
+     "pos": "vb",
+     "reading": null,
+     "senses": [
+      [
+       "sv",
+       "vattna"
+      ]
+     ],
+     "traditional": null,
+     "word": "water"
+    },
+    {
+     "id": 18,
+     "lang": "en",
+     "pos": "pm",
+     "reading": null,
+     "senses": [
+      [
+       "sv",
+       "Water (efternamn)"
+      ]
+     ],
+     "traditional": null,
+     "word": "Water"
+    }
+   ],
+   "etymologies": [
+    [
+     "en",
+     "water",
+     "noun",
+     "/ˈwɔːtə/",
+     "From Middle English water, from Old English wæter, from Proto-Germanic *watōr.",
+     "A clear liquid | The liquid in rivers and lakes"
+    ],
+    [
+     "sv",
+     "vatten",
+     "noun",
+     "/ˈvatːɛn/",
+     "From Old Swedish vatn, from Old Norse vatn.",
+     "en genomskinlig vätska"
+    ],
+    [
+     "zh",
+     "水",
+     "character",
+     null,
+     "Pictogram of flowing water.",
+     "water"
+    ]
+   ],
+   "examples": [
+    [
+     "en",
+     [
+      [
+       "I drink water every day.",
+       "Jag dricker vatten varje dag.",
+       "sv",
+       "tatoeba"
+      ],
+      [
+       "Water is wet.",
+       null,
+       null,
+       "wikt-sense"
+      ],
+      [
+       "Could I have some water?",
+       "我可以喝点水吗？",
+       "zh",
+       "tatoeba"
+      ]
+     ]
+    ]
+   ],
+   "image": {
+    "artist": "A. Photographer",
+    "h": 60,
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Water.jpg",
+    "w": 80,
+    "word": "water"
+   },
+   "inflections": {
+    "en": [
+     [
+      "waters",
+      "plural",
+      "plural"
+     ]
+    ]
+   },
+   "query": "Water",
+   "related": {
+    "sv": [
+     {
+      "entry_id": 1,
+      "glosses": [
+       "water"
+      ],
+      "reading": "vat:en",
+      "score": 0.41905978419640516,
+      "via": [
+       "water"
+      ],
+      "word": "vatten"
+     }
+    ],
+    "zh": [
+     {
+      "entry_id": 4,
+      "glosses": [
+       "water",
+       "river"
+      ],
+      "reading": "shuǐ",
+      "score": 0.41905978419640516,
+      "via": [
+       "water"
+      ],
+      "word": "水"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": {
+    "accent": "US",
+    "bytes": 14,
+    "fname": "En-us-water.ogg",
+    "word": "water"
+   },
+   "definitions": {
+    "en": [
+     "A clear liquid",
+     "The liquid in rivers and lakes",
+     "A surname",
+     "To pour water on"
+    ]
+   },
+   "did_you_mean": [],
+   "direct": {
+    "sv": [
+     "vatten",
+     "vattna",
+     "Water (efternamn)"
+    ]
+   },
+   "entries": [
+    {
+     "id": 2,
+     "lang": "en",
+     "pos": "nn",
+     "reading": null,
+     "senses": [
+      [
+       "sv",
+       "vatten"
+      ]
+     ],
+     "traditional": null,
+     "word": "water"
+    },
+    {
+     "id": 3,
+     "lang": "en",
+     "pos": "vb",
+     "reading": null,
+     "senses": [
+      [
+       "sv",
+       "vattna"
+      ]
+     ],
+     "traditional": null,
+     "word": "water"
+    },
+    {
+     "id": 18,
+     "lang": "en",
+     "pos": "pm",
+     "reading": null,
+     "senses": [
+      [
+       "sv",
+       "Water (efternamn)"
+      ]
+     ],
+     "traditional": null,
+     "word": "Water"
+    }
+   ],
+   "etymologies": [
+    [
+     "en",
+     "water",
+     "noun",
+     "/ˈwɔːtə/",
+     "From Middle English water, from Old English wæter, from Proto-Germanic *watōr.",
+     "A clear liquid | The liquid in rivers and lakes"
+    ],
+    [
+     "sv",
+     "vatten",
+     "noun",
+     "/ˈvatːɛn/",
+     "From Old Swedish vatn, from Old Norse vatn.",
+     "en genomskinlig vätska"
+    ],
+    [
+     "zh",
+     "水",
+     "character",
+     null,
+     "Pictogram of flowing water.",
+     "water"
+    ]
+   ],
+   "examples": [
+    [
+     "en",
+     [
+      [
+       "I drink water every day.",
+       "Jag dricker vatten varje dag.",
+       "sv",
+       "tatoeba"
+      ],
+      [
+       "Water is wet.",
+       null,
+       null,
+       "wikt-sense"
+      ],
+      [
+       "Could I have some water?",
+       "我可以喝点水吗？",
+       "zh",
+       "tatoeba"
+      ]
+     ]
+    ]
+   ],
+   "image": {
+    "artist": "A. Photographer",
+    "h": 60,
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Water.jpg",
+    "w": 80,
+    "word": "water"
+   },
+   "inflections": {
+    "en": [
+     [
+      "waters",
+      "plural",
+      "plural"
+     ]
+    ]
+   },
+   "query": "  WATER!! ",
+   "related": {
+    "sv": [
+     {
+      "entry_id": 1,
+      "glosses": [
+       "water"
+      ],
+      "reading": "vat:en",
+      "score": 0.41905978419640516,
+      "via": [
+       "water"
+      ],
+      "word": "vatten"
+     }
+    ],
+    "zh": [
+     {
+      "entry_id": 4,
+      "glosses": [
+       "water",
+       "river"
+      ],
+      "reading": "shuǐ",
+      "score": 0.41905978419640516,
+      "via": [
+       "water"
+      ],
+      "word": "水"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": {
+    "accent": null,
+    "bytes": 9,
+    "fname": "Sv-vatten.ogg",
+    "word": "vatten"
+   },
+   "definitions": {
+    "sv": [
+     "en genomskinlig vätska"
+    ]
+   },
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "water"
+    ]
+   },
+   "entries": [
+    {
+     "id": 1,
+     "lang": "sv",
+     "pos": "nn",
+     "reading": "vat:en",
+     "senses": [
+      [
+       "en",
+       "water"
+      ]
+     ],
+     "traditional": null,
+     "word": "vatten"
+    }
+   ],
+   "etymologies": [
+    [
+     "sv",
+     "vatten",
+     "noun",
+     "/ˈvatːɛn/",
+     "From Old Swedish vatn, from Old Norse vatn.",
+     "en genomskinlig vätska"
+    ],
+    [
+     "en",
+     "water",
+     "noun",
+     "/ˈwɔːtə/",
+     "From Middle English water, from Old English wæter, from Proto-Germanic *watōr.",
+     "A clear liquid | The liquid in rivers and lakes"
+    ],
+    [
+     "zh",
+     "水",
+     "character",
+     null,
+     "Pictogram of flowing water.",
+     "water"
+    ]
+   ],
+   "examples": [
+    [
+     "en",
+     [
+      [
+       "I drink water every day.",
+       "Jag dricker vatten varje dag.",
+       "sv",
+       "tatoeba"
+      ],
+      [
+       "Water is wet.",
+       null,
+       null,
+       "wikt-sense"
+      ],
+      [
+       "Could I have some water?",
+       "我可以喝点水吗？",
+       "zh",
+       "tatoeba"
+      ]
+     ]
+    ]
+   ],
+   "image": {
+    "artist": "A. Photographer",
+    "h": 60,
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Water.jpg",
+    "w": 80,
+    "word": "water"
+   },
+   "inflections": {},
+   "query": "vatten",
+   "related": {
+    "en": [
+     {
+      "entry_id": 2,
+      "glosses": [
+       "vatten"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "water"
+      ],
+      "word": "water"
+     }
+    ],
+    "zh": [
+     {
+      "entry_id": 4,
+      "glosses": [
+       "water",
+       "river"
+      ],
+      "reading": "shuǐ",
+      "score": 0.41905978419640516,
+      "via": [
+       "water"
+      ],
+      "word": "水"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {
+    "zh": [
+     "water"
+    ]
+   },
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "water",
+     "river"
+    ]
+   },
+   "entries": [
+    {
+     "id": 4,
+     "lang": "zh",
+     "pos": null,
+     "reading": "shuǐ",
+     "senses": [
+      [
+       "en",
+       "water"
+      ],
+      [
+       "en",
+       "river"
+      ]
+     ],
+     "traditional": null,
+     "word": "水"
+    }
+   ],
+   "etymologies": [
+    [
+     "zh",
+     "水",
+     "character",
+     null,
+     "Pictogram of flowing water.",
+     "water"
+    ],
+    [
+     "en",
+     "water",
+     "noun",
+     "/ˈwɔːtə/",
+     "From Middle English water, from Old English wæter, from Proto-Germanic *watōr.",
+     "A clear liquid | The liquid in rivers and lakes"
+    ],
+    [
+     "sv",
+     "vatten",
+     "noun",
+     "/ˈvatːɛn/",
+     "From Old Swedish vatn, from Old Norse vatn.",
+     "en genomskinlig vätska"
+    ]
+   ],
+   "examples": [
+    [
+     "zh",
+     [
+      [
+       "我要喝水。",
+       "I want to drink water.",
+       "en",
+       "tatoeba"
+      ]
+     ]
+    ],
+    [
+     "en",
+     [
+      [
+       "I drink water every day.",
+       "Jag dricker vatten varje dag.",
+       "sv",
+       "tatoeba"
+      ],
+      [
+       "Water is wet.",
+       null,
+       null,
+       "wikt-sense"
+      ],
+      [
+       "Could I have some water?",
+       "我可以喝点水吗？",
+       "zh",
+       "tatoeba"
+      ]
+     ]
+    ]
+   ],
+   "image": {
+    "artist": "A. Photographer",
+    "h": 60,
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Water.jpg",
+    "w": 80,
+    "word": "water"
+   },
+   "inflections": {},
+   "query": "水",
+   "related": {
+    "en": [
+     {
+      "entry_id": 2,
+      "glosses": [
+       "vatten"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "water"
+      ],
+      "word": "water"
+     }
+    ],
+    "sv": [
+     {
+      "entry_id": 1,
+      "glosses": [
+       "water"
+      ],
+      "reading": "vat:en",
+      "score": 0.41905978419640516,
+      "via": [
+       "water"
+      ],
+      "word": "vatten"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {
+    "zh": [
+     "water"
+    ]
+   },
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "water",
+     "river"
+    ]
+   },
+   "entries": [
+    {
+     "id": 4,
+     "lang": "zh",
+     "pos": null,
+     "reading": "shuǐ",
+     "senses": [
+      [
+       "en",
+       "water"
+      ],
+      [
+       "en",
+       "river"
+      ]
+     ],
+     "traditional": null,
+     "word": "水"
+    }
+   ],
+   "etymologies": [
+    [
+     "zh",
+     "水",
+     "character",
+     null,
+     "Pictogram of flowing water.",
+     "water"
+    ],
+    [
+     "en",
+     "water",
+     "noun",
+     "/ˈwɔːtə/",
+     "From Middle English water, from Old English wæter, from Proto-Germanic *watōr.",
+     "A clear liquid | The liquid in rivers and lakes"
+    ],
+    [
+     "sv",
+     "vatten",
+     "noun",
+     "/ˈvatːɛn/",
+     "From Old Swedish vatn, from Old Norse vatn.",
+     "en genomskinlig vätska"
+    ]
+   ],
+   "examples": [
+    [
+     "zh",
+     [
+      [
+       "我要喝水。",
+       "I want to drink water.",
+       "en",
+       "tatoeba"
+      ]
+     ]
+    ],
+    [
+     "en",
+     [
+      [
+       "I drink water every day.",
+       "Jag dricker vatten varje dag.",
+       "sv",
+       "tatoeba"
+      ],
+      [
+       "Water is wet.",
+       null,
+       null,
+       "wikt-sense"
+      ],
+      [
+       "Could I have some water?",
+       "我可以喝点水吗？",
+       "zh",
+       "tatoeba"
+      ]
+     ]
+    ]
+   ],
+   "image": {
+    "artist": "A. Photographer",
+    "h": 60,
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Water.jpg",
+    "w": 80,
+    "word": "water"
+   },
+   "inflections": {},
+   "query": "shui",
+   "related": {
+    "en": [
+     {
+      "entry_id": 2,
+      "glosses": [
+       "vatten"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "water"
+      ],
+      "word": "water"
+     }
+    ],
+    "sv": [
+     {
+      "entry_id": 1,
+      "glosses": [
+       "water"
+      ],
+      "reading": "vat:en",
+      "score": 0.41905978419640516,
+      "via": [
+       "water"
+      ],
+      "word": "vatten"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "dumpling"
+    ]
+   },
+   "entries": [
+    {
+     "id": 5,
+     "lang": "zh",
+     "pos": null,
+     "reading": "shuǐ jiǎo",
+     "senses": [
+      [
+       "en",
+       "dumpling"
+      ]
+     ],
+     "traditional": "水餃",
+     "word": "水饺"
+    }
+   ],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "shuijiao",
+   "related": {},
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "dumpling"
+    ]
+   },
+   "entries": [
+    {
+     "id": 5,
+     "lang": "zh",
+     "pos": null,
+     "reading": "shuǐ jiǎo",
+     "senses": [
+      [
+       "en",
+       "dumpling"
+      ]
+     ],
+     "traditional": "水餃",
+     "word": "水饺"
+    }
+   ],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "水餃",
+   "related": {},
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {
+    "sv": [
+     "byggnad att bo i"
+    ]
+   },
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "house",
+     "building"
+    ]
+   },
+   "entries": [
+    {
+     "id": 6,
+     "lang": "sv",
+     "pos": "nn",
+     "reading": null,
+     "senses": [
+      [
+       "en",
+       "house"
+      ]
+     ],
+     "traditional": null,
+     "word": "hus"
+    },
+    {
+     "id": 8,
+     "lang": "sv",
+     "pos": "nn",
+     "reading": null,
+     "senses": [
+      [
+       "en",
+       "building"
+      ],
+      [
+       "en",
+       "house"
+      ]
+     ],
+     "traditional": null,
+     "word": "byggnad"
+    }
+   ],
+   "etymologies": [
+    [
+     "sv",
+     "hus",
+     "noun",
+     "/hʉːs/",
+     null,
+     "byggnad att bo i"
+    ],
+    [
+     "en",
+     "house",
+     "noun",
+     "/haʊs/",
+     "From Old English hūs.",
+     "A building for living in"
+    ]
+   ],
+   "examples": [
+    [
+     "sv",
+     [
+      [
+       "Huset är stort.",
+       "The house is big.",
+       "en",
+       "folkets"
+      ],
+      [
+       "Husen är röda och husets tak är svart.",
+       "The houses are red.",
+       "en",
+       "tatoeba"
+      ]
+     ]
+    ]
+   ],
+   "image": {
+    "artist": null,
+    "h": 64,
+    "license": "CC0",
+    "page": null,
+    "w": 64,
+    "word": "house"
+   },
+   "inflections": {
+    "sv": [
+     [
+      "huset",
+      "definite singular",
+      "the …"
+     ],
+     [
+      "hus",
+      "indefinite plural",
+      "plural"
+     ],
+     [
+      "husen",
+      "definite plural",
+      "the … (pl)"
+     ],
+     [
+      "husets",
+      "genitive definite singular",
+      "genitive definite singular"
+     ]
+    ]
+   },
+   "query": "hus",
+   "related": {
+    "en": [
+     {
+      "entry_id": 7,
+      "glosses": [
+       "hus"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "house"
+      ],
+      "word": "house"
+     }
+    ],
+    "zh": [
+     {
+      "entry_id": 13,
+      "glosses": [
+       "house",
+       "building"
+      ],
+      "reading": "fáng zi",
+      "score": 0.41905978419640516,
+      "via": [
+       "building",
+       "house"
+      ],
+      "word": "房子"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {
+    "sv": [
+     "byggnad att bo i"
+    ]
+   },
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "house",
+     "building"
+    ]
+   },
+   "entries": [
+    {
+     "id": 6,
+     "lang": "sv",
+     "pos": "nn",
+     "reading": null,
+     "senses": [
+      [
+       "en",
+       "house"
+      ]
+     ],
+     "traditional": null,
+     "word": "hus"
+    },
+    {
+     "id": 8,
+     "lang": "sv",
+     "pos": "nn",
+     "reading": null,
+     "senses": [
+      [
+       "en",
+       "building"
+      ],
+      [
+       "en",
+       "house"
+      ]
+     ],
+     "traditional": null,
+     "word": "byggnad"
+    }
+   ],
+   "etymologies": [
+    [
+     "sv",
+     "hus",
+     "noun",
+     "/hʉːs/",
+     null,
+     "byggnad att bo i"
+    ],
+    [
+     "en",
+     "house",
+     "noun",
+     "/haʊs/",
+     "From Old English hūs.",
+     "A building for living in"
+    ]
+   ],
+   "examples": [
+    [
+     "sv",
+     [
+      [
+       "Huset är stort.",
+       "The house is big.",
+       "en",
+       "folkets"
+      ],
+      [
+       "Husen är röda och husets tak är svart.",
+       "The houses are red.",
+       "en",
+       "tatoeba"
+      ]
+     ]
+    ]
+   ],
+   "image": {
+    "artist": null,
+    "h": 64,
+    "license": "CC0",
+    "page": null,
+    "w": 64,
+    "word": "house"
+   },
+   "inflections": {
+    "sv": [
+     [
+      "huset",
+      "definite singular",
+      "the …"
+     ],
+     [
+      "hus",
+      "indefinite plural",
+      "plural"
+     ],
+     [
+      "husen",
+      "definite plural",
+      "the … (pl)"
+     ],
+     [
+      "husets",
+      "genitive definite singular",
+      "genitive definite singular"
+     ]
+    ]
+   },
+   "query": "husen",
+   "related": {
+    "en": [
+     {
+      "entry_id": 7,
+      "glosses": [
+       "hus"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "house"
+      ],
+      "word": "house"
+     }
+    ],
+    "zh": [
+     {
+      "entry_id": 13,
+      "glosses": [
+       "house",
+       "building"
+      ],
+      "reading": "fáng zi",
+      "score": 0.41905978419640516,
+      "via": [
+       "building",
+       "house"
+      ],
+      "word": "房子"
+     }
+    ]
+   },
+   "resolved_from": "husen",
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {
+    "sv": [
+     "byggnad att bo i"
+    ]
+   },
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "house",
+     "building"
+    ]
+   },
+   "entries": [
+    {
+     "id": 6,
+     "lang": "sv",
+     "pos": "nn",
+     "reading": null,
+     "senses": [
+      [
+       "en",
+       "house"
+      ]
+     ],
+     "traditional": null,
+     "word": "hus"
+    },
+    {
+     "id": 8,
+     "lang": "sv",
+     "pos": "nn",
+     "reading": null,
+     "senses": [
+      [
+       "en",
+       "building"
+      ],
+      [
+       "en",
+       "house"
+      ]
+     ],
+     "traditional": null,
+     "word": "byggnad"
+    }
+   ],
+   "etymologies": [
+    [
+     "sv",
+     "hus",
+     "noun",
+     "/hʉːs/",
+     null,
+     "byggnad att bo i"
+    ],
+    [
+     "en",
+     "house",
+     "noun",
+     "/haʊs/",
+     "From Old English hūs.",
+     "A building for living in"
+    ]
+   ],
+   "examples": [
+    [
+     "sv",
+     [
+      [
+       "Huset är stort.",
+       "The house is big.",
+       "en",
+       "folkets"
+      ],
+      [
+       "Husen är röda och husets tak är svart.",
+       "The houses are red.",
+       "en",
+       "tatoeba"
+      ]
+     ]
+    ]
+   ],
+   "image": {
+    "artist": null,
+    "h": 64,
+    "license": "CC0",
+    "page": null,
+    "w": 64,
+    "word": "house"
+   },
+   "inflections": {
+    "sv": [
+     [
+      "huset",
+      "definite singular",
+      "the …"
+     ],
+     [
+      "hus",
+      "indefinite plural",
+      "plural"
+     ],
+     [
+      "husen",
+      "definite plural",
+      "the … (pl)"
+     ],
+     [
+      "husets",
+      "genitive definite singular",
+      "genitive definite singular"
+     ]
+    ]
+   },
+   "query": "huset",
+   "related": {
+    "en": [
+     {
+      "entry_id": 7,
+      "glosses": [
+       "hus"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "house"
+      ],
+      "word": "house"
+     }
+    ],
+    "zh": [
+     {
+      "entry_id": 13,
+      "glosses": [
+       "house",
+       "building"
+      ],
+      "reading": "fáng zi",
+      "score": 0.41905978419640516,
+      "via": [
+       "building",
+       "house"
+      ],
+      "word": "房子"
+     }
+    ]
+   },
+   "resolved_from": "huset",
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "robbery",
+     "correct",
+     "so"
+    ]
+   },
+   "entries": [
+    {
+     "id": 11,
+     "lang": "sv",
+     "pos": "nn",
+     "reading": null,
+     "senses": [
+      [
+       "en",
+       "robbery"
+      ]
+     ],
+     "traditional": null,
+     "word": "ran"
+    },
+    {
+     "id": 12,
+     "lang": "zh",
+     "pos": null,
+     "reading": "rán",
+     "senses": [
+      [
+       "en",
+       "correct"
+      ],
+      [
+       "en",
+       "so"
+      ]
+     ],
+     "traditional": null,
+     "word": "然"
+    }
+   ],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "ran",
+   "related": {},
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {
+    "en": [
+     "To move swiftly on foot"
+    ]
+   },
+   "did_you_mean": [],
+   "direct": {
+    "sv": [
+     "springa"
+    ]
+   },
+   "entries": [
+    {
+     "id": 9,
+     "lang": "en",
+     "pos": "vb",
+     "reading": null,
+     "senses": [
+      [
+       "sv",
+       "springa"
+      ]
+     ],
+     "traditional": null,
+     "word": "run"
+    }
+   ],
+   "etymologies": [
+    [
+     "en",
+     "run",
+     "verb",
+     "/ɹʌn/",
+     "From Old English rinnan.",
+     "To move swiftly on foot"
+    ]
+   ],
+   "examples": [
+    [
+     "en",
+     [
+      [
+       "He ran home.",
+       "Han sprang hem.",
+       "sv",
+       "tatoeba"
+      ],
+      [
+       "Running is fun; I run daily.",
+       null,
+       null,
+       "wikt-quote"
+      ]
+     ]
+    ]
+   ],
+   "image": null,
+   "inflections": {
+    "en": [
+     [
+      "runs",
+      "present singular third-person",
+      "he/she/it"
+     ],
+     [
+      "ran",
+      "past",
+      "past"
+     ],
+     [
+      "run",
+      "past participle",
+      "past participle"
+     ],
+     [
+      "running",
+      "present participle",
+      "-ing form"
+     ]
+    ]
+   },
+   "query": "run",
+   "related": {
+    "sv": [
+     {
+      "entry_id": 10,
+      "glosses": [
+       "run",
+       "röra sig snabbt"
+      ],
+      "reading": null,
+      "score": 0.5906161091496412,
+      "via": [
+       "run"
+      ],
+      "word": "springa"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {
+    "en": [
+     "To move swiftly on foot"
+    ]
+   },
+   "did_you_mean": [],
+   "direct": {
+    "sv": [
+     "springa"
+    ]
+   },
+   "entries": [
+    {
+     "id": 9,
+     "lang": "en",
+     "pos": "vb",
+     "reading": null,
+     "senses": [
+      [
+       "sv",
+       "springa"
+      ]
+     ],
+     "traditional": null,
+     "word": "run"
+    }
+   ],
+   "etymologies": [
+    [
+     "en",
+     "run",
+     "verb",
+     "/ɹʌn/",
+     "From Old English rinnan.",
+     "To move swiftly on foot"
+    ]
+   ],
+   "examples": [
+    [
+     "en",
+     [
+      [
+       "He ran home.",
+       "Han sprang hem.",
+       "sv",
+       "tatoeba"
+      ],
+      [
+       "Running is fun; I run daily.",
+       null,
+       null,
+       "wikt-quote"
+      ]
+     ]
+    ]
+   ],
+   "image": null,
+   "inflections": {
+    "en": [
+     [
+      "runs",
+      "present singular third-person",
+      "he/she/it"
+     ],
+     [
+      "ran",
+      "past",
+      "past"
+     ],
+     [
+      "run",
+      "past participle",
+      "past participle"
+     ],
+     [
+      "running",
+      "present participle",
+      "-ing form"
+     ]
+    ]
+   },
+   "query": "running",
+   "related": {
+    "sv": [
+     {
+      "entry_id": 10,
+      "glosses": [
+       "run",
+       "röra sig snabbt"
+      ],
+      "reading": null,
+      "score": 0.5906161091496412,
+      "via": [
+       "run"
+      ],
+      "word": "springa"
+     }
+    ]
+   },
+   "resolved_from": "running",
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "run"
+    ]
+   },
+   "entries": [
+    {
+     "id": 10,
+     "lang": "sv",
+     "pos": "vb",
+     "reading": null,
+     "senses": [
+      [
+       "en",
+       "run"
+      ],
+      [
+       "sv",
+       "röra sig snabbt"
+      ]
+     ],
+     "traditional": null,
+     "word": "springa"
+    }
+   ],
+   "etymologies": [
+    [
+     "en",
+     "run",
+     "verb",
+     "/ɹʌn/",
+     "From Old English rinnan.",
+     "To move swiftly on foot"
+    ]
+   ],
+   "examples": [
+    [
+     "en",
+     [
+      [
+       "He ran home.",
+       "Han sprang hem.",
+       "sv",
+       "tatoeba"
+      ],
+      [
+       "Running is fun; I run daily.",
+       null,
+       null,
+       "wikt-quote"
+      ]
+     ]
+    ]
+   ],
+   "image": null,
+   "inflections": {
+    "sv": [
+     [
+      "springer",
+      "present",
+      "present"
+     ],
+     [
+      "sprang",
+      "past",
+      "past"
+     ],
+     [
+      "sprungit",
+      "supine",
+      "supine"
+     ]
+    ]
+   },
+   "query": "springa",
+   "related": {
+    "en": [
+     {
+      "entry_id": 9,
+      "glosses": [
+       "springa"
+      ],
+      "reading": null,
+      "score": 0.5906161091496412,
+      "via": [
+       "run"
+      ],
+      "word": "run"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "run"
+    ]
+   },
+   "entries": [
+    {
+     "id": 10,
+     "lang": "sv",
+     "pos": "vb",
+     "reading": null,
+     "senses": [
+      [
+       "en",
+       "run"
+      ],
+      [
+       "sv",
+       "röra sig snabbt"
+      ]
+     ],
+     "traditional": null,
+     "word": "springa"
+    }
+   ],
+   "etymologies": [
+    [
+     "en",
+     "run",
+     "verb",
+     "/ɹʌn/",
+     "From Old English rinnan.",
+     "To move swiftly on foot"
+    ]
+   ],
+   "examples": [
+    [
+     "en",
+     [
+      [
+       "He ran home.",
+       "Han sprang hem.",
+       "sv",
+       "tatoeba"
+      ],
+      [
+       "Running is fun; I run daily.",
+       null,
+       null,
+       "wikt-quote"
+      ]
+     ]
+    ]
+   ],
+   "image": null,
+   "inflections": {
+    "sv": [
+     [
+      "springer",
+      "present",
+      "present"
+     ],
+     [
+      "sprang",
+      "past",
+      "past"
+     ],
+     [
+      "sprungit",
+      "supine",
+      "supine"
+     ]
+    ]
+   },
+   "query": "sprang",
+   "related": {
+    "en": [
+     {
+      "entry_id": 9,
+      "glosses": [
+       "springa"
+      ],
+      "reading": null,
+      "score": 0.5906161091496412,
+      "via": [
+       "run"
+      ],
+      "word": "run"
+     }
+    ]
+   },
+   "resolved_from": "sprang",
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "building",
+     "house"
+    ]
+   },
+   "entries": [
+    {
+     "id": 8,
+     "lang": "sv",
+     "pos": "nn",
+     "reading": null,
+     "senses": [
+      [
+       "en",
+       "building"
+      ],
+      [
+       "en",
+       "house"
+      ]
+     ],
+     "traditional": null,
+     "word": "byggnad"
+    }
+   ],
+   "etymologies": [
+    [
+     "en",
+     "house",
+     "noun",
+     "/haʊs/",
+     "From Old English hūs.",
+     "A building for living in"
+    ],
+    [
+     "sv",
+     "hus",
+     "noun",
+     "/hʉːs/",
+     null,
+     "byggnad att bo i"
+    ]
+   ],
+   "examples": [],
+   "image": {
+    "artist": null,
+    "h": 64,
+    "license": "CC0",
+    "page": null,
+    "w": 64,
+    "word": "house"
+   },
+   "inflections": {},
+   "query": "byggnad",
+   "related": {
+    "en": [
+     {
+      "entry_id": 7,
+      "glosses": [
+       "hus"
+      ],
+      "reading": null,
+      "score": 0.2514358705178431,
+      "via": [
+       "house"
+      ],
+      "word": "house"
+     }
+    ],
+    "sv": [
+     {
+      "entry_id": 6,
+      "glosses": [
+       "house"
+      ],
+      "reading": null,
+      "score": 0.2514358705178431,
+      "via": [
+       "house"
+      ],
+      "word": "hus"
+     }
+    ],
+    "zh": [
+     {
+      "entry_id": 13,
+      "glosses": [
+       "house",
+       "building"
+      ],
+      "reading": "fáng zi",
+      "score": 0.2953080545748206,
+      "via": [
+       "building",
+       "house"
+      ],
+      "word": "房子"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {
+    "sv": [
+     "vacker",
+     "skön"
+    ]
+   },
+   "entries": [
+    {
+     "id": 14,
+     "lang": "en",
+     "pos": "jj",
+     "reading": null,
+     "senses": [
+      [
+       "sv",
+       "vacker"
+      ],
+      [
+       "sv",
+       "skön"
+      ]
+     ],
+     "traditional": null,
+     "word": "beautiful"
+    }
+   ],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {
+    "en": [
+     [
+      "more beautiful",
+      "comparative",
+      "comparative"
+     ]
+    ]
+   },
+   "query": "beautiful",
+   "related": {
+    "sv": [
+     {
+      "entry_id": 15,
+      "glosses": [
+       "beautiful",
+       "pretty"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "beautiful"
+      ],
+      "word": "vacker"
+     },
+     {
+      "entry_id": 17,
+      "glosses": [
+       "beautiful",
+       "comfortable"
+      ],
+      "reading": null,
+      "score": 0.33524782735712416,
+      "via": [
+       "beautiful"
+      ],
+      "word": "skön"
+     }
+    ],
+    "zh": [
+     {
+      "entry_id": 16,
+      "glosses": [
+       "beautiful"
+      ],
+      "reading": "měi lì",
+      "score": 0.41905978419640516,
+      "via": [
+       "beautiful"
+      ],
+      "word": "美丽"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "beautiful"
+    ]
+   },
+   "entries": [
+    {
+     "id": 16,
+     "lang": "zh",
+     "pos": null,
+     "reading": "měi lì",
+     "senses": [
+      [
+       "en",
+       "beautiful"
+      ]
+     ],
+     "traditional": "美麗",
+     "word": "美丽"
+    }
+   ],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "美丽",
+   "related": {
+    "en": [
+     {
+      "entry_id": 14,
+      "glosses": [
+       "vacker",
+       "skön"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "beautiful"
+      ],
+      "word": "beautiful"
+     }
+    ],
+    "sv": [
+     {
+      "entry_id": 15,
+      "glosses": [
+       "beautiful",
+       "pretty"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "beautiful"
+      ],
+      "word": "vacker"
+     },
+     {
+      "entry_id": 17,
+      "glosses": [
+       "beautiful",
+       "comfortable"
+      ],
+      "reading": null,
+      "score": 0.33524782735712416,
+      "via": [
+       "beautiful"
+      ],
+      "word": "skön"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "beautiful",
+     "comfortable"
+    ]
+   },
+   "entries": [
+    {
+     "id": 17,
+     "lang": "sv",
+     "pos": "jj",
+     "reading": null,
+     "senses": [
+      [
+       "en",
+       "beautiful"
+      ],
+      [
+       "en",
+       "comfortable"
+      ]
+     ],
+     "traditional": null,
+     "word": "skön"
+    }
+   ],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "skön",
+   "related": {
+    "en": [
+     {
+      "entry_id": 14,
+      "glosses": [
+       "vacker",
+       "skön"
+      ],
+      "reading": null,
+      "score": 0.33524782735712416,
+      "via": [
+       "beautiful"
+      ],
+      "word": "beautiful"
+     }
+    ],
+    "sv": [
+     {
+      "entry_id": 15,
+      "glosses": [
+       "beautiful",
+       "pretty"
+      ],
+      "reading": null,
+      "score": 0.33524782735712416,
+      "via": [
+       "beautiful"
+      ],
+      "word": "vacker"
+     }
+    ],
+    "zh": [
+     {
+      "entry_id": 16,
+      "glosses": [
+       "beautiful"
+      ],
+      "reading": "měi lì",
+      "score": 0.33524782735712416,
+      "via": [
+       "beautiful"
+      ],
+      "word": "美丽"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [
+    [
+     "water",
+     "en"
+    ],
+    [
+     "vatten",
+     "sv"
+    ]
+   ],
+   "direct": {},
+   "entries": [],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "watter",
+   "related": {},
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [
+    [
+     "beautiful",
+     "en"
+    ]
+   ],
+   "direct": {},
+   "entries": [],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "beutiful",
+   "related": {},
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [
+    [
+     "vatten",
+     "sv"
+    ],
+    [
+     "water",
+     "en"
+    ]
+   ],
+   "direct": {},
+   "entries": [],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "vaten",
+   "related": {},
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [
+    [
+     "hus",
+     "sv"
+    ],
+    [
+     "house",
+     "en"
+    ]
+   ],
+   "direct": {},
+   "entries": [],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "huss",
+   "related": {},
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {
+    "en": [
+     "The science of heat and work"
+    ]
+   },
+   "did_you_mean": [],
+   "direct": {},
+   "entries": [
+    {
+     "id": -1,
+     "lang": "en",
+     "pos": "noun",
+     "reading": "/ˌθɜːməʊdaɪˈnæmɪks/",
+     "senses": [],
+     "traditional": null,
+     "word": "thermodynamics"
+    }
+   ],
+   "etymologies": [
+    [
+     "en",
+     "thermodynamics",
+     "noun",
+     "/ˌθɜːməʊdaɪˈnæmɪks/",
+     "From Ancient Greek θέρμη (thérmē, “heat”) + dynamics.",
+     "The science of heat and work"
+    ]
+   ],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "thermodynamics",
+   "related": {},
+   "resolved_from": null,
+   "wiktionary_only": true
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {},
+   "entries": [],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "xyzzyq",
+   "related": {},
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {},
+   "entries": [],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "",
+   "related": {},
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {},
+   "entries": [],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "!!",
+   "related": {},
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [
+    [
+     "hus",
+     "sv"
+    ],
+    [
+     "水",
+     "zh"
+    ]
+   ],
+   "direct": {},
+   "entries": [],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "hu",
+   "related": {},
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {
+    "en": [
+     "A building for living in"
+    ]
+   },
+   "did_you_mean": [],
+   "direct": {
+    "sv": [
+     "hus"
+    ]
+   },
+   "entries": [
+    {
+     "id": 7,
+     "lang": "en",
+     "pos": "nn",
+     "reading": null,
+     "senses": [
+      [
+       "sv",
+       "hus"
+      ]
+     ],
+     "traditional": null,
+     "word": "house"
+    }
+   ],
+   "etymologies": [
+    [
+     "en",
+     "house",
+     "noun",
+     "/haʊs/",
+     "From Old English hūs.",
+     "A building for living in"
+    ],
+    [
+     "sv",
+     "hus",
+     "noun",
+     "/hʉːs/",
+     null,
+     "byggnad att bo i"
+    ]
+   ],
+   "examples": [],
+   "image": {
+    "artist": null,
+    "h": 64,
+    "license": "CC0",
+    "page": null,
+    "w": 64,
+    "word": "house"
+   },
+   "inflections": {},
+   "query": "house",
+   "related": {
+    "sv": [
+     {
+      "entry_id": 6,
+      "glosses": [
+       "house"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "house"
+      ],
+      "word": "hus"
+     },
+     {
+      "entry_id": 8,
+      "glosses": [
+       "building",
+       "house"
+      ],
+      "reading": null,
+      "score": 0.2514358705178431,
+      "via": [
+       "house"
+      ],
+      "word": "byggnad"
+     }
+    ],
+    "zh": [
+     {
+      "entry_id": 13,
+      "glosses": [
+       "house",
+       "building"
+      ],
+      "reading": "fáng zi",
+      "score": 0.41905978419640516,
+      "via": [
+       "house"
+      ],
+      "word": "房子"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "house",
+     "building"
+    ]
+   },
+   "entries": [
+    {
+     "id": 13,
+     "lang": "zh",
+     "pos": null,
+     "reading": "fáng zi",
+     "senses": [
+      [
+       "en",
+       "house"
+      ],
+      [
+       "en",
+       "building"
+      ]
+     ],
+     "traditional": null,
+     "word": "房子"
+    }
+   ],
+   "etymologies": [
+    [
+     "en",
+     "house",
+     "noun",
+     "/haʊs/",
+     "From Old English hūs.",
+     "A building for living in"
+    ],
+    [
+     "sv",
+     "hus",
+     "noun",
+     "/hʉːs/",
+     null,
+     "byggnad att bo i"
+    ]
+   ],
+   "examples": [],
+   "image": {
+    "artist": null,
+    "h": 64,
+    "license": "CC0",
+    "page": null,
+    "w": 64,
+    "word": "house"
+   },
+   "inflections": {},
+   "query": "房子",
+   "related": {
+    "en": [
+     {
+      "entry_id": 7,
+      "glosses": [
+       "hus"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "house"
+      ],
+      "word": "house"
+     }
+    ],
+    "sv": [
+     {
+      "entry_id": 6,
+      "glosses": [
+       "house"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "house"
+      ],
+      "word": "hus"
+     },
+     {
+      "entry_id": 8,
+      "glosses": [
+       "building",
+       "house"
+      ],
+      "reading": null,
+      "score": 0.2953080545748206,
+      "via": [
+       "house",
+       "building"
+      ],
+      "word": "byggnad"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "house",
+     "building"
+    ]
+   },
+   "entries": [
+    {
+     "id": 13,
+     "lang": "zh",
+     "pos": null,
+     "reading": "fáng zi",
+     "senses": [
+      [
+       "en",
+       "house"
+      ],
+      [
+       "en",
+       "building"
+      ]
+     ],
+     "traditional": null,
+     "word": "房子"
+    }
+   ],
+   "etymologies": [
+    [
+     "en",
+     "house",
+     "noun",
+     "/haʊs/",
+     "From Old English hūs.",
+     "A building for living in"
+    ],
+    [
+     "sv",
+     "hus",
+     "noun",
+     "/hʉːs/",
+     null,
+     "byggnad att bo i"
+    ]
+   ],
+   "examples": [],
+   "image": {
+    "artist": null,
+    "h": 64,
+    "license": "CC0",
+    "page": null,
+    "w": 64,
+    "word": "house"
+   },
+   "inflections": {},
+   "query": "fangzi",
+   "related": {
+    "en": [
+     {
+      "entry_id": 7,
+      "glosses": [
+       "hus"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "house"
+      ],
+      "word": "house"
+     }
+    ],
+    "sv": [
+     {
+      "entry_id": 6,
+      "glosses": [
+       "house"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "house"
+      ],
+      "word": "hus"
+     },
+     {
+      "entry_id": 8,
+      "glosses": [
+       "building",
+       "house"
+      ],
+      "reading": null,
+      "score": 0.2953080545748206,
+      "via": [
+       "house",
+       "building"
+      ],
+      "word": "byggnad"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  },
+  {
+   "also_form_of": null,
+   "audio": null,
+   "definitions": {},
+   "did_you_mean": [],
+   "direct": {
+    "en": [
+     "beautiful",
+     "pretty"
+    ]
+   },
+   "entries": [
+    {
+     "id": 15,
+     "lang": "sv",
+     "pos": "jj",
+     "reading": null,
+     "senses": [
+      [
+       "en",
+       "beautiful"
+      ],
+      [
+       "en",
+       "pretty"
+      ]
+     ],
+     "traditional": null,
+     "word": "vacker"
+    }
+   ],
+   "etymologies": [],
+   "examples": [],
+   "image": null,
+   "inflections": {},
+   "query": "vacker",
+   "related": {
+    "en": [
+     {
+      "entry_id": 14,
+      "glosses": [
+       "vacker",
+       "skön"
+      ],
+      "reading": null,
+      "score": 0.41905978419640516,
+      "via": [
+       "beautiful"
+      ],
+      "word": "beautiful"
+     }
+    ],
+    "sv": [
+     {
+      "entry_id": 17,
+      "glosses": [
+       "beautiful",
+       "comfortable"
+      ],
+      "reading": null,
+      "score": 0.33524782735712416,
+      "via": [
+       "beautiful"
+      ],
+      "word": "skön"
+     }
+    ],
+    "zh": [
+     {
+      "entry_id": 16,
+      "glosses": [
+       "beautiful"
+      ],
+      "reading": "měi lì",
+      "score": 0.41905978419640516,
+      "via": [
+       "beautiful"
+      ],
+      "word": "美丽"
+     }
+    ]
+   },
+   "resolved_from": null,
+   "wiktionary_only": false
+  }
+ ],
+ "norm": [
+  [
+   "Water",
+   "water",
+   "water",
+   false
+  ],
+  [
+   "  Hello,  World! ",
+   "hello world",
+   "helloworld",
+   false
+  ],
+  [
+   "Ångström",
+   "ångström",
+   "angstrom",
+   false
+  ],
+  [
+   "ÅÄÖ åäö",
+   "åäö åäö",
+   "aaoaao",
+   false
+  ],
+  [
+   "straße",
+   "strasse",
+   "strasse",
+   false
+  ],
+  [
+   "ΣΊΣΥΦΟΣ",
+   "σίσυφοσ",
+   "σισυφοσ",
+   false
+  ],
+  [
+   "ﬁne",
+   "fine",
+   "fine",
+   false
+  ],
+  [
+   "水饺",
+   "水饺",
+   "水饺",
+   true
+  ],
+  [
+   "shuǐ jiǎo",
+   "shuǐ jiǎo",
+   "shuijiao",
+   false
+  ],
+  [
+   "café",
+   "café",
+   "cafe",
+   false
+  ],
+  [
+   "naïve—test",
+   "naïve test",
+   "naivetest",
+   false
+  ],
+  [
+   "「水」",
+   "水",
+   "水",
+   true
+  ],
+  [
+   "é",
+   "é",
+   "e",
+   false
+  ],
+  [
+   "Ｆｕｌｌ　ｗｉｄｔｈ",
+   "",
+   "",
+   false
+  ],
+  [
+   "tab\tand\nnewline",
+   "tab and newline",
+   "tabandnewline",
+   false
+  ],
+  [
+   "İstanbul",
+   "i̇stanbul",
+   "istanbul",
+   false
+  ],
+  [
+   "ǅemal",
+   "ǆemal",
+   "ǆemal",
+   false
+  ],
+  [
+   "...",
+   "",
+   "",
+   false
+  ],
+  [
+   "a-b_c",
+   "a b c",
+   "abc",
+   false
+  ]
+ ],
+ "retrievability": [
+  [
+   0,
+   1,
+   1.0
+  ],
+  [
+   1,
+   1,
+   0.9
+  ],
+  [
+   10,
+   3.7,
+   0.7823089871909034
+  ],
+  [
+   100,
+   30,
+   0.749133448584115
+  ],
+  [
+   5,
+   0,
+   0.0
+  ]
+ ],
+ "suggest": [
+  [
+   "wa",
+   [
+    [
+     "water",
+     "en"
+    ]
+   ]
+  ],
+  [
+   "va",
+   [
+    [
+     "vatten",
+     "sv"
+    ],
+    [
+     "vacker",
+     "sv"
+    ]
+   ]
+  ],
+  [
+   "sh",
+   [
+    [
+     "水",
+     "zh"
+    ],
+    [
+     "水饺",
+     "zh"
+    ]
+   ]
+  ],
+  [
+   "h",
+   [
+    [
+     "hus",
+     "sv"
+    ],
+    [
+     "house",
+     "en"
+    ]
+   ]
+  ],
+  [
+   "水",
+   [
+    [
+     "水",
+     "zh"
+    ],
+    [
+     "水饺",
+     "zh"
+    ]
+   ]
+  ],
+  [
+   "be",
+   [
+    [
+     "beautiful",
+     "en"
+    ]
+   ]
+  ],
+  [
+   "SPR",
+   [
+    [
+     "springa",
+     "sv"
+    ]
+   ]
+  ],
+  [
+   "x",
+   []
+  ],
+  [
+   "",
+   []
+  ]
+ ]
+}
